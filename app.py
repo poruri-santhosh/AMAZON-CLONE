@@ -17,7 +17,10 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "super-secret-amazon-clone-2026-xyz")
+secret_key = os.getenv("FLASK_SECRET_KEY")
+if os.getenv("VERCEL") and not secret_key:
+    raise RuntimeError("FLASK_SECRET_KEY must be set in the Vercel project environment.")
+app.secret_key = secret_key or "local-development-only-change-me"
 
 DEMO_CUSTOMER_EMAIL = "demo@amazon-clone.local"
 

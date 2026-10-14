@@ -104,11 +104,13 @@ A full-featured Amazon clone built with a **Flask** backend, authentic **HTML5, 
 ## 🏃 Getting Started
 
 ### 1. Environment Configuration
-Verify your Neon connection URL in `.env`:
+Set your Neon connection URL and a unique Flask session key in `.env`:
 ```ini
-DATABASE_URL=postgresql://neondb_owner:npg_a5GzVw9JpEHO@ep-dawn-dream-b6xvp6y9-pooler.c-2.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+DATABASE_URL=postgresql://USER:PASSWORD@HOST/DATABASE?sslmode=require
+FLASK_SECRET_KEY=replace-with-a-random-secret
 FLASK_DEBUG=false
 ```
+Generate a random session key with `python -c "import secrets; print(secrets.token_hex(32))"`.
 
 ### 2. Run the Store
 Start the Flask server:
@@ -125,3 +127,10 @@ Execute the comprehensive 13-point test suite:
 ```bash
 python test_suite.py
 ```
+
+## Deploy to Vercel
+
+1. Import `poruri-santhosh/AMAZON-CLONE` from the Vercel dashboard. Vercel detects the Flask app in `app.py`.
+2. Add `DATABASE_URL` and `FLASK_SECRET_KEY` under the project's Environment Variables. Generate a unique value for `FLASK_SECRET_KEY`; do not reuse the local development value.
+3. Make sure the Neon database has been initialized with `schema.sql` and populated as needed.
+4. Deploy the project. Vercel requires `FLASK_SECRET_KEY` at startup and will report an error if it is missing.
