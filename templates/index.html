@@ -1,0 +1,3536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#131921">
+  <title>Amazon.com. Spend less. Smile more.</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --navy: #131921;
+      --navy-light: #232f3e;
+      --navy-dark: #0f1111;
+      --orange: #febd69;
+      --orange-btn: #ffd814;
+      --orange-btn-hover: #f7ca00;
+      --orange-buy-btn: #ffa41c;
+      --orange-buy-hover: #fa8900;
+      --amazon-link: #007185;
+      --amazon-link-hover: #c7511f;
+      --line-color: #d5d9d9;
+      --bg-color: #eaeded;
+      --prime-blue: #00a8e1;
+      --deal-red: #cc0c39;
+      --stock-green: #007600;
+      --star-color: #de7921;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Amazon Ember", Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--navy-dark);
+      min-width: 320px;
+      line-height: 1.4;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--amazon-link); text-decoration: none; cursor: pointer; }
+    a:hover { color: var(--amazon-link-hover); text-decoration: underline; }
+    button, input, select, textarea { font-family: inherit; }
+    button { cursor: pointer; border: none; }
+
+    /* ========================================================
+       TOP NAVBAR
+       ======================================================== */
+    .navbar {
+      background: var(--navy);
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      font-size: 13px;
+    }
+
+    .nav-main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 16px;
+      min-height: 60px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6px 9px;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      color: white;
+      white-space: nowrap;
+      user-select: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .nav-item:hover {
+      border-color: white;
+      text-decoration: none;
+    }
+
+    /* Logo */
+    .nav-logo-box {
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 4px 8px;
+    }
+    .nav-logo-text {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+      line-height: 1;
+      color: white;
+      position: relative;
+    }
+    .nav-logo-text span {
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: normal;
+      margin-left: 2px;
+    }
+    .nav-logo-text::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 7px;
+      border-bottom: 3px solid #ff9900;
+      border-radius: 0 0 50% 50%;
+      transform: rotate(-1deg);
+    }
+
+    /* Deliver To */
+    .nav-deliver {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .nav-deliver i { font-size: 16px; margin-top: 4px; }
+    .nav-deliver-line1 { font-size: 11px; color: #ccc; }
+    .nav-deliver-line2 { font-size: 14px; font-weight: 700; }
+
+    /* Search Bar */
+    .nav-search-bar {
+      display: flex;
+      flex: 1 1 auto;
+      height: 40px;
+      border-radius: 4px;
+      position: relative;
+    }
+    .nav-search-bar:focus-within {
+      box-shadow: 0 0 0 3px #f3a847;
+    }
+    .nav-search-category {
+      background: #e6e6e6;
+      border: 0;
+      border-right: 1px solid #cdcdcd;
+      border-radius: 4px 0 0 4px;
+      padding: 0 8px;
+      font-size: 12px;
+      color: #333;
+      cursor: pointer;
+      max-width: 135px;
+      outline: none;
+    }
+    .nav-search-category:hover { background: #dadada; }
+    .nav-search-input-box {
+      flex: 1;
+      position: relative;
+      background: white;
+    }
+    .nav-search-input {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      padding: 0 12px;
+      font-size: 15px;
+      outline: none;
+      color: #111;
+    }
+    .nav-search-clear {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      cursor: pointer;
+      display: none;
+      font-size: 14px;
+    }
+    .nav-search-btn {
+      width: 45px;
+      background: var(--orange);
+      border: 0;
+      border-radius: 0 4px 4px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #111;
+      transition: background 0.15s;
+    }
+    .nav-search-btn:hover { background: #f3a847; }
+
+    /* Suggestions Dropdown */
+    .nav-suggestions {
+      position: absolute;
+      top: 42px;
+      left: 0;
+      right: 0;
+      background: white;
+      color: #111;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      border: 1px solid #ddd;
+      z-index: 1050;
+      display: none;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+    .suggestion-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid #f4f4f4;
+      font-size: 14px;
+    }
+    .suggestion-item:hover { background: #f0f7f9; }
+    .suggestion-img { width: 34px; height: 34px; object-fit: contain; }
+    .suggestion-title { flex: 1; font-weight: 500; }
+    .suggestion-price { color: #b12704; font-weight: 700; }
+
+    /* Lang selector */
+    .nav-lang {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+    }
+    .nav-flag { font-size: 16px; }
+
+    /* Account & Lists */
+    .nav-account { position: relative; }
+    .nav-account-line1 { font-size: 11px; color: #ccc; }
+    .nav-account-line2 { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+
+    /* Account Menu Dropdown */
+    .nav-account-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 280px;
+      background: white;
+      color: #111;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      border-radius: 4px;
+      padding: 14px;
+      display: none;
+      z-index: 1100;
+    }
+    .nav-account:hover .nav-account-menu,
+    .nav-account-menu.show { display: block; }
+    .account-auth-header {
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 10px;
+    }
+    .btn-amazon-primary {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+      border: 1px solid #a88734;
+      border-radius: 3px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #111;
+    }
+    .btn-amazon-primary:hover { background: #f0c14b; text-decoration: none; }
+    .account-sublinks {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      font-size: 13px;
+    }
+    .account-sublinks a { color: #444; display: block; padding: 4px 0; }
+    .account-sublinks a:hover { color: var(--amazon-link-hover); }
+
+    /* Cart */
+    .nav-cart {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+      padding: 6px 12px;
+    }
+    .nav-cart-icon-box {
+      position: relative;
+      display: inline-block;
+    }
+    .nav-cart-icon-box i { font-size: 26px; }
+    .nav-cart-badge {
+      position: absolute;
+      top: -4px;
+      left: 12px;
+      background: var(--orange);
+      color: #111;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      line-height: 1;
+    }
+    .nav-cart-title {
+      font-weight: 700;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    /* Sub Nav Bar */
+    .nav-sub {
+      background: var(--navy-light);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      height: 39px;
+      font-size: 14px;
+      gap: 12px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .nav-sub-item {
+      color: white;
+      padding: 7px 8px;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .nav-sub-item:hover {
+      border-color: white;
+      text-decoration: none;
+    }
+    .nav-sub-hamburger {
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ========================================================
+       HERO CAROUSEL
+       ======================================================== */
+    .hero-container {
+      position: relative;
+      max-width: 1500px;
+      margin: 0 auto;
+      height: 400px;
+      overflow: hidden;
+    }
+    .hero-slider {
+      display: flex;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .hero-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      background-size: cover;
+      background-position: center top;
+      display: flex;
+      align-items: flex-start;
+      padding: 40px 60px;
+    }
+    .hero-slide::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 220px;
+      background: linear-gradient(to bottom, rgba(234, 237, 237, 0) 0%, rgba(234, 237, 237, 1) 100%);
+      pointer-events: none;
+    }
+    .hero-slide-content {
+      position: relative;
+      z-index: 2;
+      max-width: 580px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 24px 30px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    }
+    .hero-tag {
+      background: var(--deal-red);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .hero-title {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .hero-desc {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 16px;
+    }
+    .hero-btn {
+      display: inline-block;
+      background: var(--orange-btn);
+      border: 1px solid #d4b100;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 6px;
+      color: #111;
+      cursor: pointer;
+    }
+    .hero-btn:hover { background: var(--orange-btn-hover); }
+
+    .hero-nav-arrow {
+      position: absolute;
+      top: 130px;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 70px;
+      background: rgba(255,255,255,0.4);
+      border: 1px solid rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #222;
+      cursor: pointer;
+      z-index: 10;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .hero-nav-arrow:hover { background: rgba(255,255,255,0.9); }
+    .hero-prev { left: 15px; }
+    .hero-next { right: 15px; }
+
+    /* ========================================================
+       FEATURED QUAD-CARDS GRID (OVERLAPPING HERO)
+       ======================================================== */
+    .home-quads {
+      position: relative;
+      z-index: 5;
+      max-width: 1500px;
+      margin: -140px auto 20px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .quad-card {
+      background: white;
+      padding: 20px 18px 16px;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    }
+    .quad-title {
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #0f1111;
+    }
+    .quad-grid-2x2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      flex: 1;
+    }
+    .quad-item {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .quad-item-img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 2px;
+      background: #f7f7f7;
+    }
+    .quad-item-label {
+      font-size: 12px;
+      color: #333;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .quad-link {
+      margin-top: 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--amazon-link);
+      cursor: pointer;
+    }
+
+    /* ========================================================
+       MAIN STOREFRONT LAYOUT & PRODUCTS GRID
+       ======================================================== */
+    .main-layout {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 0 18px 40px;
+      display: flex;
+      gap: 24px;
+    }
+
+    /* Filter Sidebar */
+    .filters-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: white;
+      padding: 16px;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      height: fit-content;
+      font-size: 13px;
+    }
+    .filter-group {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e7e7e7;
+    }
+    .filter-group:last-child { border-bottom: none; margin-bottom: 0; }
+    .filter-header {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #0f1111;
+    }
+    .filter-list { list-style: none; }
+    .filter-list li {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-link {
+      color: #333;
+      cursor: pointer;
+    }
+    .filter-link.active, .filter-link:hover {
+      color: #c45500;
+      font-weight: 700;
+    }
+    .filter-stars {
+      color: var(--star-color);
+      display: inline-flex;
+      gap: 2px;
+    }
+    .price-range-inputs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .price-range-inputs input {
+      width: 60px;
+      padding: 5px 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .price-go-btn {
+      padding: 5px 10px;
+      border: 1px solid #a88734;
+      background: #f0c14b;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* Results Header */
+    .results-area {
+      flex: 1;
+      min-width: 0;
+    }
+    .results-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 12px 18px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      font-size: 14px;
+    }
+    .results-count { font-weight: 600; color: #333; }
+    .sort-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sort-select {
+      padding: 6px 10px;
+      border: 1px solid #d5d9d9;
+      background: #f0f2f2;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      outline: none;
+    }
+    .sort-select:hover { background: #e3e6e6; }
+
+    /* Products Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .product-card {
+      background: white;
+      border: 1px solid #e7e7e7;
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .product-card:hover {
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
+    }
+
+    /* Badges */
+    .card-badge-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .badge-bestseller {
+      background: #e67a00;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-choice {
+      background: #232f3e;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .badge-choice span { color: #f3a847; }
+    .badge-deal {
+      background: var(--deal-red);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    /* Wishlist Heart Button */
+    .card-wishlist-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2;
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #888;
+      transition: all 0.2s;
+    }
+    .card-wishlist-btn:hover { color: #e47911; background: white; transform: scale(1.1); }
+    .card-wishlist-btn.active { color: #e47911; }
+
+    .card-image-box {
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    .card-image {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      transition: transform 0.2s;
+    }
+    .card-image-box:hover .card-image { transform: scale(1.04); }
+
+    .card-brand {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 2px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #0f1111;
+      line-height: 1.3;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .card-title:hover { color: var(--amazon-link-hover); }
+
+    /* Ratings */
+    .card-rating-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    .card-stars { color: var(--star-color); font-size: 13px; }
+    .card-rating-count { color: var(--amazon-link); }
+
+    /* Price */
+    .card-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .card-discount-badge {
+      background: var(--deal-red);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+    .card-price-curr { font-size: 12px; font-weight: 700; vertical-align: top; }
+    .card-price-val { font-size: 21px; font-weight: 700; color: #0f1111; }
+    .card-price-orig {
+      font-size: 12px;
+      color: #565959;
+      text-decoration: line-through;
+    }
+
+    .card-prime-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #565959;
+      margin-bottom: 8px;
+    }
+    .prime-logo {
+      color: var(--prime-blue);
+      font-weight: 800;
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    .card-stock {
+      font-size: 12px;
+      color: var(--stock-green);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .card-stock.low { color: #b12704; }
+
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .btn-add-cart {
+      background: var(--orange-btn);
+      border: 1px solid #d4b100;
+      border-radius: 20px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #0f1111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+    .btn-add-cart:hover { background: var(--orange-btn-hover); }
+    .btn-quick-view {
+      background: #f0f2f2;
+      border: 1px solid #d5d9d9;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #333;
+      text-align: center;
+    }
+    .btn-quick-view:hover { background: #e3e6e6; }
+
+    /* ========================================================
+       MODALS & OVERLAYS (AMAZON STYLE)
+       ======================================================== */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+
+    .modal-box {
+      background: white;
+      border-radius: 8px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 22px;
+      color: #666;
+      background: transparent;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .modal-close-btn:hover { color: #111; }
+
+    /* Product Detail Modal */
+    .pdp-container {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 30px;
+      padding: 30px;
+    }
+    .pdp-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pdp-main-img-box {
+      height: 380px;
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .pdp-main-img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .pdp-thumb-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+    }
+    .pdp-thumb {
+      width: 60px;
+      height: 60px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      object-fit: contain;
+      cursor: pointer;
+      padding: 3px;
+    }
+    .pdp-thumb.active, .pdp-thumb:hover { border-color: #e47911; box-shadow: 0 0 0 1px #e47911; }
+
+    .pdp-info { display: flex; flex-direction: column; }
+    .pdp-brand-link { font-size: 13px; color: var(--amazon-link); margin-bottom: 4px; }
+    .pdp-title { font-size: 22px; font-weight: 700; color: #0f1111; line-height: 1.3; margin-bottom: 8px; }
+    .pdp-ratings-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e7e7e7;
+      margin-bottom: 12px;
+    }
+    .pdp-price-box {
+      background: #fdfdfd;
+      padding: 12px 0;
+      border-bottom: 1px solid #e7e7e7;
+      margin-bottom: 14px;
+    }
+    .pdp-discount-tag {
+      color: var(--deal-red);
+      font-size: 24px;
+      font-weight: 300;
+      margin-right: 6px;
+    }
+    .pdp-price { font-size: 28px; font-weight: 700; color: #0f1111; }
+    .pdp-orig-price { color: #565959; font-size: 13px; text-decoration: line-through; margin-left: 6px; }
+
+    .pdp-bullets { margin: 14px 0; }
+    .pdp-bullets h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .pdp-bullets ul { padding-left: 20px; font-size: 13px; color: #333; line-height: 1.6; }
+
+    .pdp-buybox {
+      border: 1px solid #d5d9d9;
+      border-radius: 8px;
+      padding: 16px;
+      background: #fafafa;
+      margin-top: 14px;
+    }
+    .pdp-buybox-price { font-size: 22px; font-weight: 700; color: #b12704; margin-bottom: 6px; }
+    .pdp-delivery-promise { font-size: 13px; color: #333; margin-bottom: 12px; }
+    .pdp-qty-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 13px;
+    }
+    .pdp-qty-select {
+      padding: 6px 12px;
+      border: 1px solid #d5d9d9;
+      background: #f0f2f2;
+      border-radius: 6px;
+      outline: none;
+    }
+    .pdp-actions-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .btn-pdp-cart {
+      background: var(--orange-btn);
+      border: 1px solid #d4b100;
+      border-radius: 20px;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .btn-pdp-cart:hover { background: var(--orange-btn-hover); }
+    .btn-pdp-buy {
+      background: var(--orange-buy-btn);
+      border: 1px solid #e08300;
+      border-radius: 20px;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .btn-pdp-buy:hover { background: var(--orange-buy-hover); }
+
+    /* Reviews Section in Modal */
+    .pdp-reviews-section {
+      grid-column: 1 / -1;
+      border-top: 1px solid #e7e7e7;
+      padding-top: 24px;
+      margin-top: 10px;
+    }
+    .reviews-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 30px;
+    }
+    .review-summary-box h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .review-score-big { font-size: 32px; font-weight: 800; color: #111; }
+    .review-score-stars { color: var(--star-color); font-size: 18px; margin: 4px 0; }
+    .write-review-card {
+      border: 1px solid #d5d9d9;
+      border-radius: 6px;
+      padding: 14px;
+      margin-top: 16px;
+      background: #f9f9f9;
+    }
+    .write-review-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .star-picker {
+      display: flex;
+      gap: 6px;
+      font-size: 20px;
+      color: #ccc;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .star-picker i:hover, .star-picker i.selected { color: var(--star-color); }
+    .review-input, .review-textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .review-textarea { height: 75px; resize: vertical; }
+
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .review-item {
+      padding-bottom: 14px;
+      border-bottom: 1px solid #eee;
+    }
+    .review-author { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
+    .review-author-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: white;
+    }
+    .review-item-rating { display: flex; align-items: center; gap: 6px; font-size: 12px; margin: 4px 0; }
+    .review-item-title { font-weight: 700; font-size: 14px; color: #111; }
+    .review-verified { color: #c45500; font-size: 11px; font-weight: 700; }
+    .review-item-text { font-size: 13px; color: #333; line-height: 1.5; margin-top: 4px; }
+
+    /* ========================================================
+       SLIDE-OVER CART DRAWER
+       ======================================================== */
+    .cart-drawer-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2500;
+      display: none;
+    }
+    .cart-drawer-backdrop.open { display: block; }
+    .cart-drawer {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 440px;
+      max-width: 90vw;
+      background: white;
+      z-index: 2600;
+      box-shadow: -4px 0 20px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fafafa;
+    }
+    .cart-header h2 { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .cart-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+    }
+    .cart-qualify-banner {
+      background: #f0f8ff;
+      border: 1px solid #bce8f1;
+      color: #007600;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cart-item {
+      display: flex;
+      gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #eee;
+    }
+    .cart-item-img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      border: 1px solid #f0f0f0;
+      border-radius: 4px;
+    }
+    .cart-item-info { flex: 1; }
+    .cart-item-title { font-size: 14px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
+    .cart-item-price { font-size: 15px; font-weight: 700; color: #b12704; margin-bottom: 6px; }
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+    }
+    .cart-qty-stepper {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #d5d9d9;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #f0f2f2;
+    }
+    .cart-qty-btn {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      font-weight: 700;
+    }
+    .cart-qty-val {
+      padding: 0 8px;
+      font-weight: 700;
+      font-size: 13px;
+      background: white;
+      height: 26px;
+      display: flex;
+      align-items: center;
+    }
+    .cart-item-link-btn {
+      color: var(--amazon-link);
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .cart-item-link-btn:hover { text-decoration: underline; }
+
+    .cart-footer {
+      padding: 16px 20px;
+      border-top: 1px solid #eee;
+      background: #fafafa;
+    }
+    .cart-subtotal-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .btn-checkout-proceed {
+      display: block;
+      width: 100%;
+      background: var(--orange-btn);
+      border: 1px solid #d4b100;
+      border-radius: 20px;
+      padding: 11px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f1111;
+      text-align: center;
+    }
+    .btn-checkout-proceed:hover { background: var(--orange-btn-hover); }
+
+    /* Saved for later section */
+    .cart-saved-section {
+      margin-top: 20px;
+      border-top: 2px dashed #ddd;
+      padding-top: 16px;
+    }
+    .cart-saved-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+
+    /* ========================================================
+       CHECKOUT MODAL
+       ======================================================== */
+    .checkout-modal-box {
+      max-width: 800px;
+      padding: 26px;
+    }
+    .checkout-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .checkout-step-card {
+      border: 1px solid #d5d9d9;
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .checkout-step-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .checkout-step-num {
+      width: 24px;
+      height: 24px;
+      background: var(--navy);
+      color: white;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+    .form-group label { font-size: 12px; font-weight: 700; color: #333; }
+    .form-control {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .payment-radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14px;
+    }
+    .payment-option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid #e7e7e7;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .payment-option-label:hover { background: #fbfbfb; }
+
+    /* ========================================================
+       ORDERS & TRACKING MODAL
+       ======================================================== */
+    .orders-modal-box {
+      max-width: 860px;
+      padding: 24px;
+    }
+    .order-card {
+      border: 1px solid #d5d9d9;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .order-card-header {
+      background: #f0f2f2;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #565959;
+    }
+    .order-card-header strong { display: block; color: #111; font-size: 13px; }
+    .order-card-body { padding: 18px; }
+    .order-status-banner {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--stock-green);
+      margin-bottom: 14px;
+    }
+    .order-status-banner.cancelled { color: #c45500; }
+
+    /* Tracking Stepper */
+    .tracking-stepper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      margin: 20px 0 24px;
+      padding: 0 10px;
+    }
+    .tracking-line {
+      position: absolute;
+      top: 14px;
+      left: 30px;
+      right: 30px;
+      height: 4px;
+      background: #e0e0e0;
+      z-index: 1;
+    }
+    .tracking-line-progress {
+      height: 100%;
+      background: var(--stock-green);
+      width: 0%;
+      transition: width 0.4s;
+    }
+    .tracking-step {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #777;
+    }
+    .tracking-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #e0e0e0;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+    .tracking-step.done .tracking-dot { background: var(--stock-green); }
+    .tracking-step.done { color: #111; font-weight: 700; }
+
+    .order-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .order-item-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .order-item-img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      border: 1px solid #eee;
+      border-radius: 4px;
+    }
+    .order-item-details { flex: 1; font-size: 13px; }
+    .order-item-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-order-action {
+      padding: 6px 12px;
+      border: 1px solid #d5d9d9;
+      background: #f0f2f2;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .btn-order-action:hover { background: #e3e6e6; }
+
+    /* ========================================================
+       AUTH MODAL (SIGN IN / REGISTER)
+       ======================================================== */
+    .auth-modal-box {
+      max-width: 400px;
+      padding: 30px;
+      text-align: center;
+    }
+    .auth-logo {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -1.5px;
+      margin-bottom: 18px;
+      display: inline-block;
+    }
+    .auth-logo span { color: #ff9900; }
+    .auth-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 24px;
+      text-align: left;
+      background: white;
+    }
+    .auth-card h2 { font-size: 24px; font-weight: 600; margin-bottom: 16px; }
+    .auth-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #eee;
+    }
+    .auth-tab {
+      padding: 6px 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      color: #666;
+    }
+    .auth-tab.active {
+      color: #111;
+      border-bottom: 2px solid #e47911;
+    }
+    .auth-btn-submit {
+      width: 100%;
+      background: var(--orange-btn);
+      border: 1px solid #d4b100;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+    .auth-btn-submit:hover { background: var(--orange-btn-hover); }
+    .auth-demo-shortcut {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+    .btn-demo-login {
+      background: #f0f2f2;
+      border: 1px solid #d5d9d9;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      width: 100%;
+    }
+    .btn-demo-login:hover { background: #e3e6e6; }
+
+    /* ========================================================
+       LOCATION PICKER MODAL
+       ======================================================== */
+    .location-modal-box {
+      max-width: 440px;
+      padding: 24px;
+    }
+    .location-preset-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .location-city-btn {
+      padding: 8px 12px;
+      border: 1px solid #d5d9d9;
+      background: #f7f7f7;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .location-city-btn:hover { background: #e8f4f8; border-color: #007185; }
+
+    /* ========================================================
+       LEFT HAMBURGER DRAWER ("ALL" MENU)
+       ======================================================== */
+    .drawer-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 3000;
+      display: none;
+    }
+    .drawer-backdrop.open { display: block; }
+    .drawer-nav {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: 360px;
+      max-width: 85vw;
+      background: white;
+      z-index: 3100;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .drawer-nav.open { transform: translateX(0); }
+    .drawer-user-header {
+      background: var(--navy-light);
+      color: white;
+      padding: 16px 24px;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .drawer-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 0;
+    }
+    .drawer-group-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111;
+      padding: 12px 24px 6px;
+    }
+    .drawer-item {
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+    }
+    .drawer-item:hover { background: #eaeded; color: #111; }
+    .drawer-divider {
+      height: 1px;
+      background: #e7e7e7;
+      margin: 10px 0;
+    }
+
+    /* ========================================================
+       FOOTER & TOAST
+       ======================================================== */
+    .back-to-top {
+      background: #37475a;
+      color: white;
+      text-align: center;
+      padding: 14px 0;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .back-to-top:hover { background: #485769; }
+    .footer-main {
+      background: var(--navy-light);
+      color: #ddd;
+      padding: 40px 20px;
+      font-size: 13px;
+    }
+    .footer-cols {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+    }
+    .footer-col h4 { color: white; font-size: 15px; margin-bottom: 12px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 8px; }
+    .footer-col a { color: #ddd; }
+    .footer-col a:hover { text-decoration: underline; }
+    .footer-bottom {
+      background: var(--navy);
+      text-align: center;
+      padding: 24px;
+      color: #999;
+      font-size: 12px;
+    }
+
+    /* Toast */
+    .toast-popup {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #111;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 6px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 5000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast-popup.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .toast-popup.success { border-left: 4px solid #00c853; }
+    .toast-popup.error { border-left: 4px solid #ff3d00; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .main-layout { flex-direction: column; }
+      .filters-sidebar { width: 100%; }
+      .pdp-container { grid-template-columns: 1fr; }
+      .hero-container { height: 260px; }
+      .home-quads { margin-top: -30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       TOP NAVBAR
+       ========================================== -->
+  <header class="navbar">
+    <div class="nav-main">
+      <!-- Amazon Logo -->
+      <a href="#" class="nav-item nav-logo-box" onclick="resetAllFilters(event)" title="Amazon Home">
+        <div class="nav-logo-text">amazon<span>.clone</span></div>
+      </a>
+
+      <!-- Deliver To -->
+      <div class="nav-item nav-deliver" onclick="openLocationModal()" title="Change delivery destination">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <div class="nav-deliver-line1">Deliver to <span id="nav-deliver-user">{{ customer.name.split(' ')[0] if customer else 'Alex' }}</span></div>
+          <div class="nav-deliver-line2" id="nav-deliver-city">{{ customer.city if customer else 'Seattle' }} {{ customer.postal_code if customer else '98109' }}</div>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="nav-search-bar">
+        <select class="nav-search-category" id="search-category" onchange="applyFilters()">
+          <option value="All">All Departments</option>
+          {% for cat in categories %}
+          <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
+          {% endfor %}
+        </select>
+        <div class="nav-search-input-box">
+          <input type="text" class="nav-search-input" id="search-input" placeholder="Search Amazon products, brands, deals..." autocomplete="off">
+          <i class="fa-solid fa-xmark nav-search-clear" id="search-clear-btn" onclick="clearSearch()"></i>
+          <div class="nav-suggestions" id="search-suggestions"></div>
+        </div>
+        <button class="nav-search-btn" onclick="applyFilters()" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+
+      <!-- Language Selector -->
+      <div class="nav-item nav-lang" onclick="openLanguageModal()" title="Language settings">
+        <span class="nav-flag">🇺🇸</span>
+        <span style="font-weight: 700;">EN</span>
+        <i class="fa-solid fa-caret-down" style="font-size: 10px;"></i>
+      </div>
+
+      <!-- Account & Lists -->
+      <div class="nav-item nav-account" id="nav-account-btn">
+        <div class="nav-account-line1">Hello, <span id="nav-user-firstname">{{ customer.name.split(' ')[0] if customer else 'Sign in' }}</span></div>
+        <div class="nav-account-line2">Account & Lists <i class="fa-solid fa-caret-down" style="font-size: 10px;"></i></div>
+
+        <!-- Account Dropdown Menu -->
+        <div class="nav-account-menu" id="nav-account-menu">
+          <div class="account-auth-header">
+            <button class="btn-amazon-primary" onclick="openAuthModal('signin')">Sign In</button>
+            <div style="font-size: 11px; margin-top: 6px;">New customer? <a onclick="openAuthModal('register')">Start here.</a></div>
+          </div>
+          <div class="account-sublinks">
+            <a onclick="openOrdersModal()"><i class="fa-solid fa-box"></i> Your Orders</a>
+            <a onclick="openWishlistModal()"><i class="fa-solid fa-heart"></i> Your Wish List</a>
+            <a onclick="filterByDeals()"><i class="fa-solid fa-tag"></i> Today's Deals</a>
+            <a onclick="openSupportModal()"><i class="fa-solid fa-headset"></i> Customer Service</a>
+            <a onclick="switchDemoAccount()"><i class="fa-solid fa-user-check"></i> Switch to Demo Account</a>
+            <a onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Returns & Orders -->
+      <div class="nav-item" onclick="openOrdersModal()" title="View past orders & tracking">
+        <div class="nav-account-line1">Returns</div>
+        <div class="nav-account-line2">& Orders</div>
+      </div>
+
+      <!-- Cart Icon Button -->
+      <div class="nav-item nav-cart" onclick="openCartDrawer()" title="View shopping cart">
+        <div class="nav-cart-icon-box">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="nav-cart-badge" id="nav-cart-count">{{ cart_count }}</span>
+        </div>
+        <span class="nav-cart-title">Cart</span>
+      </div>
+    </div>
+
+    <!-- Secondary Subnav -->
+    <div class="nav-sub">
+      <div class="nav-sub-item nav-sub-hamburger" onclick="toggleDrawer()">
+        <i class="fa-solid fa-bars"></i> All
+      </div>
+      <div class="nav-sub-item" onclick="filterByDeals()"><i class="fa-solid fa-bolt" style="color: var(--orange);"></i> Today's Deals</div>
+      <div class="nav-sub-item" onclick="filterByDepartment('Electronics')">Electronics</div>
+      <div class="nav-sub-item" onclick="filterByDepartment('Computers')">Computers</div>
+      <div class="nav-sub-item" onclick="filterByDepartment('Home & Kitchen')">Home & Kitchen</div>
+      <div class="nav-sub-item" onclick="filterByDepartment('Fashion')">Fashion</div>
+      <div class="nav-sub-item" onclick="filterByDepartment('Books')">Books</div>
+      <div class="nav-sub-item" onclick="filterByBestSellers()"><i class="fa-solid fa-crown" style="color: #ff9900;"></i> Best Sellers</div>
+      <div class="nav-sub-item" onclick="openWishlistModal()"><i class="fa-solid fa-heart"></i> Wish List</div>
+      <div class="nav-sub-item" onclick="openSupportModal()"><i class="fa-solid fa-circle-question"></i> Customer Service</div>
+      <div class="nav-sub-item" onclick="openGiftCardsModal()"><i class="fa-solid fa-gift"></i> Gift Cards</div>
+      <div class="nav-sub-item" onclick="openSellModal()">Sell on Amazon</div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       HERO CAROUSEL
+       ========================================== -->
+  <section class="hero-container" id="hero-banner">
+    <div class="hero-slider" id="hero-slider">
+      <!-- Slide 1: Prime & Electronics -->
+      <div class="hero-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=1500&q=80');">
+        <div class="hero-slide-content">
+          <span class="hero-tag">PRIME DAY SPECIAL</span>
+          <h1 class="hero-title">Supercharge Your Everyday Tech</h1>
+          <p class="hero-desc">Up to 30% off Apple, Samsung, Sony, and more. Free Two-Day delivery with Prime.</p>
+          <button class="hero-btn" onclick="filterByDepartment('Electronics')">Explore Tech Deals</button>
+        </div>
+      </div>
+      <!-- Slide 2: Home & Kitchen -->
+      <div class="hero-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1500&q=80');">
+        <div class="hero-slide-content">
+          <span class="hero-tag">LIMITED TIME DEAL</span>
+          <h1 class="hero-title">Upgrade Your Kitchen & Home</h1>
+          <p class="hero-desc">Top-rated air fryers, espresso makers, and intelligent vacuums for effortless living.</p>
+          <button class="hero-btn" onclick="filterByDepartment('Home & Kitchen')">Shop Home Essentials</button>
+        </div>
+      </div>
+      <!-- Slide 3: Fashion & Trends -->
+      <div class="hero-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1500&q=80');">
+        <div class="hero-slide-content">
+          <span class="hero-tag">TRENDING NOW</span>
+          <h1 class="hero-title">Fashion Forward Picks for All</h1>
+          <p class="hero-desc">Score the freshest styles in sneakers, heritage denim, and chronograph watches.</p>
+          <button class="hero-btn" onclick="filterByDepartment('Fashion')">Shop Fashion Deals</button>
+        </div>
+      </div>
+    </div>
+    <!-- Carousel Arrows -->
+    <button class="hero-nav-arrow hero-prev" onclick="prevSlide()" aria-label="Previous Slide"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="hero-nav-arrow hero-next" onclick="nextSlide()" aria-label="Next Slide"><i class="fa-solid fa-chevron-right"></i></button>
+  </section>
+
+  <!-- ==========================================
+       HOME FEATURED QUAD-CARDS
+       ========================================== -->
+  <section class="home-quads" id="home-quads">
+    <!-- Quad 1: Electronics -->
+    <div class="quad-card">
+      <h2 class="quad-title">Top categories in Electronics</h2>
+      <div class="quad-grid-2x2">
+        <div class="quad-item" onclick="filterBySearch('iPhone')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=300" alt="Phones">
+          <span class="quad-item-label">Smartphones</span>
+        </div>
+        <div class="quad-item" onclick="filterBySearch('Sony')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300" alt="Headphones">
+          <span class="quad-item-label">Headphones</span>
+        </div>
+        <div class="quad-item" onclick="filterBySearch('MacBook')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=300" alt="Laptops">
+          <span class="quad-item-label">Laptops</span>
+        </div>
+        <div class="quad-item" onclick="filterBySearch('AirPods')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=300" alt="Earbuds">
+          <span class="quad-item-label">Earbuds</span>
+        </div>
+      </div>
+      <a class="quad-link" onclick="filterByDepartment('Electronics')">See more electronics</a>
+    </div>
+
+    <!-- Quad 2: Home & Kitchen -->
+    <div class="quad-card">
+      <h2 class="quad-title">Refresh your home space</h2>
+      <div class="quad-grid-2x2">
+        <div class="quad-item" onclick="filterBySearch('Ninja')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=300" alt="Air Fryer">
+          <span class="quad-item-label">Air Fryers</span>
+        </div>
+        <div class="quad-item" onclick="filterBySearch('Nespresso')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=300" alt="Coffee Maker">
+          <span class="quad-item-label">Coffee Makers</span>
+        </div>
+        <div class="quad-item" onclick="filterBySearch('Dyson')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1558317374-067fb5f30001?w=300" alt="Vacuums">
+          <span class="quad-item-label">Cordless Vacuums</span>
+        </div>
+        <div class="quad-item" onclick="filterBySearch('CeraVe')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300" alt="Skincare">
+          <span class="quad-item-label">Skincare</span>
+        </div>
+      </div>
+      <a class="quad-link" onclick="filterByDepartment('Home & Kitchen')">Explore home essentials</a>
+    </div>
+
+    <!-- Quad 3: Fashion & Trends -->
+    <div class="quad-card">
+      <h2 class="quad-title">Fashion styles you'll love</h2>
+      <div class="quad-grid-2x2">
+        <div class="quad-item" onclick="filterBySearch('Nike')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300" alt="Sneakers">
+          <span class="quad-item-label">Running Shoes</span>
+        </div>
+        <div class="quad-item" onclick="filterBySearch('Casio')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=300" alt="Watches">
+          <span class="quad-item-label">Watches</span>
+        </div>
+        <div class="quad-item" onclick="filterBySearch('Levi')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=300" alt="Denim">
+          <span class="quad-item-label">Denim Jeans</span>
+        </div>
+        <div class="quad-item" onclick="filterBySearch('Atomic')">
+          <img class="quad-item-img" src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300" alt="Books">
+          <span class="quad-item-label">Best Sellers</span>
+        </div>
+      </div>
+      <a class="quad-link" onclick="filterByDepartment('Fashion')">Discover fashion picks</a>
+    </div>
+
+    <!-- Quad 4: Account & Quick Actions -->
+    <div class="quad-card">
+      <h2 class="quad-title">Account & Quick Services</h2>
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-around;">
+        <p style="font-size: 14px; color: #444;">Enjoy full Prime benefits, track your packages, and manage your wishlist.</p>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin: 12px 0;">
+          <button class="btn-amazon-primary" onclick="openOrdersModal()"><i class="fa-solid fa-box"></i> View Your Orders</button>
+          <button class="btn-quick-view" onclick="openWishlistModal()"><i class="fa-solid fa-heart" style="color: #e47911;"></i> Your Wish List</button>
+          <button class="btn-quick-view" onclick="openCartDrawer()"><i class="fa-solid fa-cart-shopping"></i> View Cart (<span id="quad-cart-count">{{ cart_count }}</span>)</button>
+        </div>
+      </div>
+      <a class="quad-link" onclick="openSupportModal()">Visit Help & Customer Service</a>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MAIN STOREFRONT & PRODUCTS SECTION
+       ========================================== -->
+  <main class="main-layout" id="products-section">
+    <!-- Left Filter Sidebar -->
+    <aside class="filters-sidebar">
+      <!-- Departments -->
+      <div class="filter-group">
+        <h3 class="filter-header">Department</h3>
+        <ul class="filter-list">
+          <li><span class="filter-link active" onclick="selectDepartment('All')">All Departments</span></li>
+          <li><span class="filter-link" onclick="selectDepartment('Electronics')">Electronics</span></li>
+          <li><span class="filter-link" onclick="selectDepartment('Computers')">Computers & Tech</span></li>
+          <li><span class="filter-link" onclick="selectDepartment('Home & Kitchen')">Home & Kitchen</span></li>
+          <li><span class="filter-link" onclick="selectDepartment('Fashion')">Fashion & Apparel</span></li>
+          <li><span class="filter-link" onclick="selectDepartment('Books')">Books & Audible</span></li>
+          <li><span class="filter-link" onclick="selectDepartment('Beauty & Personal Care')">Beauty & Personal Care</span></li>
+        </ul>
+      </div>
+
+      <!-- Customer Reviews -->
+      <div class="filter-group">
+        <h3 class="filter-header">Customer Reviews</h3>
+        <ul class="filter-list">
+          <li>
+            <span class="filter-link" onclick="filterByMinRating(4)">
+              <span class="filter-stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+              </span> & Up
+            </span>
+          </li>
+          <li>
+            <span class="filter-link" onclick="filterByMinRating(4.5)">
+              <span class="filter-stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+              </span> & Up
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Prime & Deals Toggles -->
+      <div class="filter-group">
+        <h3 class="filter-header">Special Offers</h3>
+        <ul class="filter-list">
+          <li>
+            <label style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+              <input type="checkbox" id="filter-prime-toggle" onchange="applyFilters()">
+              <span class="prime-logo">prime</span> eligible
+            </label>
+          </li>
+          <li>
+            <label style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+              <input type="checkbox" id="filter-deals-toggle" onchange="applyFilters()">
+              <span>Today's Deals</span>
+            </label>
+          </li>
+          <li>
+            <label style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+              <input type="checkbox" id="filter-bestseller-toggle" onchange="applyFilters()">
+              <span>Best Sellers only</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Price Filter -->
+      <div class="filter-group">
+        <h3 class="filter-header">Price</h3>
+        <ul class="filter-list">
+          <li><span class="filter-link" onclick="setPriceRange(null, 25)">Under $25</span></li>
+          <li><span class="filter-link" onclick="setPriceRange(25, 50)">$25 to $50</span></li>
+          <li><span class="filter-link" onclick="setPriceRange(50, 100)">$50 to $100</span></li>
+          <li><span class="filter-link" onclick="setPriceRange(100, 500)">$100 to $500</span></li>
+          <li><span class="filter-link" onclick="setPriceRange(500, null)">$500 & Above</span></li>
+        </ul>
+        <div class="price-range-inputs">
+          <span>$</span>
+          <input type="number" id="price-min" placeholder="Min" min="0">
+          <span>$</span>
+          <input type="number" id="price-max" placeholder="Max" min="0">
+          <button class="price-go-btn" onclick="applyFilters()">Go</button>
+        </div>
+      </div>
+
+      <!-- Reset Filters Button -->
+      <button class="btn-quick-view" style="width: 100%; margin-top: 10px;" onclick="resetAllFilters()">Reset All Filters</button>
+    </aside>
+
+    <!-- Results Area -->
+    <div class="results-area">
+      <!-- Results Bar -->
+      <div class="results-bar">
+        <div class="results-count" id="results-count-text">
+          Showing <span id="visible-products-count">{{ products|length }}</span> products in live catalog
+        </div>
+        <div class="sort-control">
+          <label for="sort-select">Sort by:</label>
+          <select class="sort-select" id="sort-select" onchange="applyFilters()">
+            <option value="featured">Featured</option>
+            <option value="price_low">Price: Low to High</option>
+            <option value="price_high">Price: High to Low</option>
+            <option value="rating">Avg. Customer Review</option>
+            <option value="newest">Newest Arrivals</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="products-grid">
+        {% for p in products %}
+        <article class="product-card" data-asin="{{ p.asin }}">
+          <!-- Badges -->
+          <div class="card-badge-container">
+            {% if p.is_best_seller %}
+            <span class="badge-bestseller">#1 Best Seller</span>
+            {% elif p.is_amazons_choice %}
+            <span class="badge-choice">Amazon's <span>Choice</span></span>
+            {% elif p.discount_percent > 15 %}
+            <span class="badge-deal">Save {{ p.discount_percent }}%</span>
+            {% endif %}
+          </div>
+
+          <!-- Wishlist Heart Toggle -->
+          <button class="card-wishlist-btn" onclick="toggleWishlist('{{ p.asin }}', this)" title="Add to Wish List" aria-label="Wishlist">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+
+          <!-- Product Image -->
+          <div class="card-image-box" onclick="openProductDetail('{{ p.asin }}')">
+            <img class="card-image" src="{{ p.image_url }}" alt="{{ p.title }}" loading="lazy">
+          </div>
+
+          <!-- Brand & Title -->
+          <div class="card-brand">{{ p.brand }}</div>
+          <h3 class="card-title" onclick="openProductDetail('{{ p.asin }}')" title="{{ p.title }}">{{ p.title }}</h3>
+
+          <!-- Ratings -->
+          <div class="card-rating-row">
+            <div class="card-stars">
+              {% for i in range(5) %}
+                {% if i < (p.rating|int) %}
+                  <i class="fa-solid fa-star"></i>
+                {% else %}
+                  <i class="fa-regular fa-star"></i>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <span class="card-rating-count">{{ "{:,}".format(p.rating_count) }}</span>
+          </div>
+
+          <!-- Price -->
+          <div class="card-price-row">
+            {% if p.discount_percent > 0 %}
+            <span class="card-discount-badge">-{{ p.discount_percent }}%</span>
+            {% endif %}
+            <span class="card-price-curr">$</span>
+            <span class="card-price-val">{{ "%.2f"|format(p.price) }}</span>
+            {% if p.original_price %}
+            <span class="card-price-orig">${{ "%.2f"|format(p.original_price) }}</span>
+            {% endif %}
+          </div>
+
+          <!-- Prime & Delivery -->
+          <div class="card-prime-row">
+            {% if p.is_prime %}
+            <span class="prime-logo">prime</span>
+            <span>FREE delivery <strong>Tomorrow</strong></span>
+            {% else %}
+            <span>Delivery within 3-4 days</span>
+            {% endif %}
+          </div>
+
+          <!-- Stock -->
+          {% if p.units_in_stock > 10 %}
+          <div class="card-stock">In Stock</div>
+          {% elif p.units_in_stock > 0 %}
+          <div class="card-stock low">Only {{ p.units_in_stock }} left in stock - order soon.</div>
+          {% else %}
+          <div class="card-stock low">Currently unavailable</div>
+          {% endif %}
+
+          <!-- Action Buttons -->
+          <div class="card-actions">
+            {% if p.units_in_stock > 0 %}
+            <button class="btn-add-cart" onclick="addToCart('{{ p.asin }}', 1)">
+              <i class="fa-solid fa-cart-plus"></i> Add to Cart
+            </button>
+            {% else %}
+            <button class="btn-add-cart" disabled style="opacity: 0.5; background: #ddd; border-color: #ccc; cursor: not-allowed;">
+              Out of Stock
+            </button>
+            {% endif %}
+            <button class="btn-quick-view" onclick="openProductDetail('{{ p.asin }}')">Quick View</button>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================
+       PRODUCT DETAIL MODAL
+       ========================================== -->
+  <div class="modal-backdrop" id="pdp-modal">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeModal('pdp-modal')" aria-label="Close">&times;</button>
+      <div class="pdp-container" id="pdp-content">
+        <!-- Dynamically populated via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       SLIDE-OVER CART DRAWER
+       ========================================== -->
+  <div class="cart-drawer-backdrop" id="cart-drawer-backdrop" onclick="closeCartDrawer()"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h2><i class="fa-solid fa-cart-shopping" style="color: var(--orange);"></i> Shopping Cart</h2>
+      <button class="modal-close-btn" style="position: static;" onclick="closeCartDrawer()">&times;</button>
+    </div>
+    <div class="cart-body" id="cart-items-container">
+      <!-- Populated via JS -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-subtotal-row">
+        <span>Subtotal (<span id="cart-drawer-items-count">0</span> items):</span>
+        <span style="color: #b12704;" id="cart-drawer-subtotal">$0.00</span>
+      </div>
+      <button class="btn-checkout-proceed" onclick="proceedToCheckout()">
+        Proceed to Checkout
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==========================================
+       CHECKOUT MODAL
+       ========================================== -->
+  <div class="modal-backdrop" id="checkout-modal">
+    <div class="modal-box checkout-modal-box">
+      <button class="modal-close-btn" onclick="closeModal('checkout-modal')">&times;</button>
+      <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 18px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+        <i class="fa-solid fa-lock" style="color: #007600;"></i> Secure Checkout
+      </h2>
+
+      <div id="checkout-form-container">
+        <div class="checkout-steps">
+          <!-- Step 1: Shipping Address -->
+          <div class="checkout-step-card">
+            <div class="checkout-step-title"><span class="checkout-step-num">1</span> Shipping Address</div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" class="form-control" id="co-name" value="{{ customer.name if customer else 'Alex Mercer' }}">
+              </div>
+              <div class="form-group">
+                <label>Street Address</label>
+                <input type="text" class="form-control" id="co-address" value="{{ customer.shipping_address if customer else '410 Terry Ave N' }}">
+              </div>
+              <div class="form-group">
+                <label>City</label>
+                <input type="text" class="form-control" id="co-city" value="{{ customer.city if customer else 'Seattle' }}">
+              </div>
+              <div class="form-group">
+                <label>ZIP / Postal Code</label>
+                <input type="text" class="form-control" id="co-zip" value="{{ customer.postal_code if customer else '98109' }}">
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Payment Method -->
+          <div class="checkout-step-card">
+            <div class="checkout-step-title"><span class="checkout-step-num">2</span> Payment Method</div>
+            <div class="payment-radio-group">
+              <label class="payment-option-label">
+                <input type="radio" name="payment_method" value="Amazon Pay (Balance $250.00)" checked>
+                <i class="fa-brands fa-amazon-pay" style="font-size: 20px; color: #ff9900;"></i>
+                <span><strong>Amazon Pay Balance</strong> (Available: $250.00)</span>
+              </label>
+              <label class="payment-option-label">
+                <input type="radio" name="payment_method" value="Visa Card ending in 4242">
+                <i class="fa-brands fa-cc-visa" style="font-size: 20px; color: #1a1f71;"></i>
+                <span><strong>Visa ending in 4242</strong> (Alex Mercer)</span>
+              </label>
+              <label class="payment-option-label">
+                <input type="radio" name="payment_method" value="Cash on Delivery">
+                <i class="fa-solid fa-money-bill-wave" style="font-size: 18px; color: #007600;"></i>
+                <span><strong>Cash on Delivery (COD)</strong></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 3: Delivery Speed -->
+          <div class="checkout-step-card">
+            <div class="checkout-step-title"><span class="checkout-step-num">3</span> Delivery Options</div>
+            <div class="payment-radio-group">
+              <label class="payment-option-label">
+                <input type="radio" name="delivery_speed" value="FREE Two-Day Shipping" checked onchange="updateCheckoutTotal()">
+                <span class="prime-logo">prime</span>
+                <span><strong>FREE Two-Day Shipping</strong> (Delivered in 2 days)</span>
+              </label>
+              <label class="payment-option-label">
+                <input type="radio" name="delivery_speed" value="Priority One-Day Shipping (+$4.99)" onchange="updateCheckoutTotal()">
+                <i class="fa-solid fa-bolt" style="color: var(--orange);"></i>
+                <span><strong>Priority One-Day Delivery</strong> (+$4.99)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Order Summary in Checkout -->
+          <div style="background: #fafafa; border: 1px solid #ddd; border-radius: 8px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span>Items Subtotal:</span>
+              <span id="co-items-total">$0.00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span>Shipping & Handling:</span>
+              <span id="co-shipping-total">$0.00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>Estimated Tax (8%):</span>
+              <span id="co-tax-total">$0.00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; border-top: 1px solid #ddd; padding-top: 10px; color: #b12704;">
+              <span>Order Total:</span>
+              <span id="co-grand-total">$0.00</span>
+            </div>
+          </div>
+
+          <button class="btn-checkout-proceed" id="btn-place-order" onclick="executeCheckout()">
+            <i class="fa-solid fa-lock"></i> Place your order in USD
+          </button>
+        </div>
+      </div>
+
+      <!-- Checkout Confirmation Screen (Revealed upon success) -->
+      <div id="checkout-success-view" style="display: none; text-align: center; padding: 30px 10px;">
+        <i class="fa-solid fa-circle-check" style="font-size: 54px; color: var(--stock-green); margin-bottom: 16px;"></i>
+        <h3 style="font-size: 24px; font-weight: 700; color: #111; margin-bottom: 8px;">Order Placed, Thank You!</h3>
+        <p style="color: #555; margin-bottom: 18px;">Confirmation and receipt sent to your email.</p>
+        <div style="background: #f7f7f7; border: 1px solid #eee; border-radius: 8px; padding: 18px; text-align: left; max-width: 460px; margin: 0 auto 20px; font-size: 13px; line-height: 1.8;">
+          <div><strong>Order Number:</strong> <span id="conf-order-id"></span></div>
+          <div><strong>Tracking Number:</strong> <span id="conf-tracking-id"></span></div>
+          <div><strong>Estimated Delivery:</strong> <span id="conf-delivery-date" style="color: var(--stock-green); font-weight: 700;"></span></div>
+          <div><strong>Ship To:</strong> <span id="conf-ship-to"></span></div>
+          <div><strong>Total Charged:</strong> <span id="conf-total" style="font-weight: 700; color: #b12704;"></span></div>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button class="btn-amazon-primary" style="max-width: 200px;" onclick="closeModal('checkout-modal'); openOrdersModal();">View in Your Orders</button>
+          <button class="btn-quick-view" style="max-width: 180px;" onclick="closeModal('checkout-modal');">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       YOUR ORDERS MODAL
+       ========================================== -->
+  <div class="modal-backdrop" id="orders-modal">
+    <div class="modal-box orders-modal-box">
+      <button class="modal-close-btn" onclick="closeModal('orders-modal')">&times;</button>
+      <h2 style="font-size: 22px; font-weight: 700; margin-bottom: 20px;">
+        <i class="fa-solid fa-box" style="color: var(--orange);"></i> Your Orders & Tracking
+      </h2>
+      <div id="orders-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       WISHLIST MODAL
+       ========================================== -->
+  <div class="modal-backdrop" id="wishlist-modal">
+    <div class="modal-box orders-modal-box">
+      <button class="modal-close-btn" onclick="closeModal('wishlist-modal')">&times;</button>
+      <h2 style="font-size: 22px; font-weight: 700; margin-bottom: 20px;">
+        <i class="fa-solid fa-heart" style="color: #e47911;"></i> Your Wish List
+      </h2>
+      <div id="wishlist-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       AUTH MODAL (LOGIN / REGISTER)
+       ========================================== -->
+  <div class="modal-backdrop" id="auth-modal">
+    <div class="modal-box auth-modal-box">
+      <button class="modal-close-btn" onclick="closeModal('auth-modal')">&times;</button>
+      <div class="auth-logo">amazon<span>.clone</span></div>
+
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tab-signin" onclick="switchAuthTab('signin')">Sign In</div>
+          <div class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Create Account</div>
+        </div>
+
+        <div id="auth-register-name-box" style="display: none;" class="form-group">
+          <label>Your Name</label>
+          <input type="text" class="form-control" id="auth-name" placeholder="First and last name">
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" id="auth-email" placeholder="example@email.com" value="demo@amazon-clone.local">
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" id="auth-password" placeholder="At least 6 characters" value="amazonpassword123">
+        </div>
+
+        <button class="auth-btn-submit" id="auth-submit-btn" onclick="submitAuth()">Sign In</button>
+
+        <div class="auth-demo-shortcut">
+          <p style="font-size: 11px; color: #666; margin-bottom: 8px;">Want quick testing without entering credentials?</p>
+          <button class="btn-demo-login" onclick="switchDemoAccount()"><i class="fa-solid fa-bolt" style="color: var(--orange);"></i> Instant Demo Account Login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       DELIVERY LOCATION MODAL
+       ========================================== -->
+  <div class="modal-backdrop" id="location-modal">
+    <div class="modal-box location-modal-box">
+      <button class="modal-close-btn" onclick="closeModal('location-modal')">&times;</button>
+      <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 12px;">Choose your location</h3>
+      <p style="font-size: 13px; color: #555; margin-bottom: 14px;">Delivery options and speeds will update for your selected destination.</p>
+
+      <div class="form-group">
+        <label>Enter a US ZIP Code</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" class="form-control" id="location-zip-input" placeholder="e.g. 98109" maxlength="10">
+          <button class="price-go-btn" onclick="updateLocationCustom()">Apply</button>
+        </div>
+      </div>
+
+      <div style="font-size: 12px; color: #666; margin: 14px 0 6px;">Or choose a major city:</div>
+      <div class="location-preset-grid">
+        <button class="location-city-btn" onclick="setLocationCity('Seattle', '98109')">Seattle, WA</button>
+        <button class="location-city-btn" onclick="setLocationCity('New York', '10001')">New York, NY</button>
+        <button class="location-city-btn" onclick="setLocationCity('San Francisco', '94105')">San Francisco, CA</button>
+        <button class="location-city-btn" onclick="setLocationCity('Austin', '78701')">Austin, TX</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       CUSTOMER SERVICE & HELP MODAL
+       ========================================== -->
+  <div class="modal-backdrop" id="support-modal">
+    <div class="modal-box" style="max-width: 600px; padding: 26px;">
+      <button class="modal-close-btn" onclick="closeModal('support-modal')">&times;</button>
+      <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 14px;">Amazon Customer Service Hub</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+        <div style="border: 1px solid #ddd; border-radius: 6px; padding: 14px; cursor: pointer;" onclick="closeModal('support-modal'); openOrdersModal();">
+          <i class="fa-solid fa-box" style="font-size: 22px; color: var(--orange);"></i>
+          <h4 style="font-size: 14px; margin-top: 6px;">Your Orders</h4>
+          <p style="font-size: 11px; color: #666;">Track packages, edit or cancel orders</p>
+        </div>
+        <div style="border: 1px solid #ddd; border-radius: 6px; padding: 14px; cursor: pointer;" onclick="showToast('Returns are free within 30 days of delivery!')">
+          <i class="fa-solid fa-rotate-left" style="font-size: 22px; color: var(--prime-blue);"></i>
+          <h4 style="font-size: 14px; margin-top: 6px;">Returns & Refunds</h4>
+          <p style="font-size: 11px; color: #666;">Print return labels and review policy</p>
+        </div>
+      </div>
+      <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 8px;">Simulated Customer Support Assistant:</h4>
+      <div style="background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; padding: 12px; height: 160px; overflow-y: auto; font-size: 13px; line-height: 1.6;" id="support-chat-log">
+        <p><strong>Amazon Bot:</strong> Hello! How can I assist you with your orders or delivery today?</p>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 10px;">
+        <input type="text" class="form-control" id="support-chat-input" placeholder="Ask about shipping, Prime, or payments...">
+        <button class="btn-amazon-primary" style="width: 100px;" onclick="sendSupportMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       HAMBURGER DRAWER ("ALL" SIDEBAR)
+       ========================================== -->
+  <div class="drawer-backdrop" id="drawer-backdrop" onclick="toggleDrawer()"></div>
+  <aside class="drawer-nav" id="drawer-nav">
+    <div class="drawer-user-header">
+      <i class="fa-solid fa-circle-user" style="font-size: 26px;"></i>
+      <span>Hello, <span id="drawer-user-name">{{ customer.name if customer else 'Alex' }}</span></span>
+    </div>
+    <div class="drawer-content">
+      <div class="drawer-group-title">Trending</div>
+      <div class="drawer-item" onclick="filterByBestSellers(); toggleDrawer();">Best Sellers <i class="fa-solid fa-chevron-right"></i></div>
+      <div class="drawer-item" onclick="filterByDeals(); toggleDrawer();">Today's Deals <i class="fa-solid fa-chevron-right"></i></div>
+
+      <div class="drawer-divider"></div>
+
+      <div class="drawer-group-title">Shop By Department</div>
+      <div class="drawer-item" onclick="filterByDepartment('Electronics'); toggleDrawer();">Electronics <i class="fa-solid fa-chevron-right"></i></div>
+      <div class="drawer-item" onclick="filterByDepartment('Computers'); toggleDrawer();">Computers & Tablets <i class="fa-solid fa-chevron-right"></i></div>
+      <div class="drawer-item" onclick="filterByDepartment('Home & Kitchen'); toggleDrawer();">Home & Kitchen <i class="fa-solid fa-chevron-right"></i></div>
+      <div class="drawer-item" onclick="filterByDepartment('Fashion'); toggleDrawer();">Fashion & Apparel <i class="fa-solid fa-chevron-right"></i></div>
+      <div class="drawer-item" onclick="filterByDepartment('Books'); toggleDrawer();">Books & Literature <i class="fa-solid fa-chevron-right"></i></div>
+      <div class="drawer-item" onclick="filterByDepartment('Beauty & Personal Care'); toggleDrawer();">Beauty & Personal Care <i class="fa-solid fa-chevron-right"></i></div>
+
+      <div class="drawer-divider"></div>
+
+      <div class="drawer-group-title">Help & Settings</div>
+      <div class="drawer-item" onclick="openOrdersModal(); toggleDrawer();">Your Orders</div>
+      <div class="drawer-item" onclick="openWishlistModal(); toggleDrawer();">Your Wish List</div>
+      <div class="drawer-item" onclick="openSupportModal(); toggleDrawer();">Customer Service</div>
+      <div class="drawer-item" onclick="logout(); toggleDrawer();">Sign Out</div>
+    </div>
+  </aside>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <div class="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    Back to top
+  </div>
+  <footer class="footer-main">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Get to Know Us</h4>
+        <ul>
+          <li><a href="#" onclick="showToast('Amazon Clone portfolio project built with Flask & Neon Postgres')">About Us</a></li>
+          <li><a href="#" onclick="showToast('Careers at Amazon')">Careers</a></li>
+          <li><a href="#" onclick="showToast('Amazon Clone Press Center')">Press Releases</a></li>
+          <li><a href="#" onclick="showToast('Amazon Science & AI')">Amazon Science</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Make Money with Us</h4>
+        <ul>
+          <li><a href="#" onclick="openSellModal()">Sell products on Amazon</a></li>
+          <li><a href="#" onclick="showToast('Become an Affiliate')">Become an Affiliate</a></li>
+          <li><a href="#" onclick="showToast('Fulfillment by Amazon active')">Fulfillment by Amazon</a></li>
+          <li><a href="#" onclick="showToast('Advertise Your Products')">Advertise Your Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Amazon Payment Products</h4>
+        <ul>
+          <li><a href="#" onclick="showToast('Amazon Pay Balance available')">Amazon Pay</a></li>
+          <li><a href="#" onclick="showToast('Amazon Business Card')">Amazon Business Card</a></li>
+          <li><a href="#" onclick="showToast('Reload Your Balance')">Reload Your Balance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Let Us Help You</h4>
+        <ul>
+          <li><a onclick="openOrdersModal()">Your Account & Orders</a></li>
+          <li><a onclick="showToast('Shipping Rates & Policies')">Shipping Rates & Policies</a></li>
+          <li><a onclick="showToast('Returns & Replacements available')">Returns & Replacements</a></li>
+          <li><a onclick="openSupportModal()">Help & Customer Care</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <div class="footer-bottom">
+    <div style="font-size: 20px; font-weight: 800; color: white; margin-bottom: 8px;">amazon<span>.clone</span></div>
+    <p>© 1996-2026, Amazon.com, Inc. or its affiliates. Full mock clone running on Flask & Neon PostgreSQL.</p>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-popup" id="toast-popup" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" id="toast-icon"></i>
+    <span id="toast-text">Message</span>
+  </div>
+
+  <!-- ==========================================
+       JAVASCRIPT LOGIC
+       ========================================== -->
+  <script>
+    // Global State
+    let currentDepartment = 'All';
+    let currentCategory = 'All';
+    let currentMinRating = null;
+    let minPrice = null;
+    let maxPrice = null;
+    let activeSlide = 0;
+    let slideInterval;
+    let currentAuthMode = 'signin';
+    let checkoutDirectItem = null; // null for cart, or {asin, units}
+
+    // Initialize Hero Carousel
+    function initHeroCarousel() {
+      const slider = document.getElementById('hero-slider');
+      const slidesCount = 3;
+
+      window.nextSlide = function() {
+        activeSlide = (activeSlide + 1) % slidesCount;
+        slider.style.transform = `translateX(-${activeSlide * 100}%)`;
+      };
+      window.prevSlide = function() {
+        activeSlide = (activeSlide - 1 + slidesCount) % slidesCount;
+        slider.style.transform = `translateX(-${activeSlide * 100}%)`;
+      };
+
+      slideInterval = setInterval(window.nextSlide, 6000);
+      const container = document.getElementById('hero-banner');
+      container.addEventListener('mouseenter', () => clearInterval(slideInterval));
+      container.addEventListener('mouseleave', () => slideInterval = setInterval(window.nextSlide, 6000));
+    }
+
+    // Toast Notifications
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast-popup');
+      const text = document.getElementById('toast-text');
+      const icon = document.getElementById('toast-icon');
+
+      text.textContent = message;
+      toast.className = `toast-popup ${type} visible`;
+      icon.className = type === 'error' ? 'fa-solid fa-triangle-exclamation' : 'fa-solid fa-circle-check';
+
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 3800);
+    }
+
+    // Modal Helpers
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Drawer Helpers
+    function toggleDrawer() {
+      const drawer = document.getElementById('drawer-nav');
+      const backdrop = document.getElementById('drawer-backdrop');
+      const isOpen = drawer.classList.contains('open');
+      drawer.classList.toggle('open', !isOpen);
+      backdrop.classList.toggle('open', !isOpen);
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    }
+
+    // Search Autocomplete
+    const searchInput = document.getElementById('search-input');
+    const searchClear = document.getElementById('search-clear-btn');
+    const suggestionsBox = document.getElementById('search-suggestions');
+    let searchDebounce;
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim();
+      searchClear.style.display = q ? 'block' : 'none';
+      clearTimeout(searchDebounce);
+      if (q.length < 2) {
+        suggestionsBox.style.display = 'none';
+        return;
+      }
+      searchDebounce = setTimeout(async () => {
+        try {
+          const res = await fetch(`/api/search/suggestions?q=${encodeURIComponent(q)}`);
+          const items = await res.json();
+          if (items.length > 0) {
+            suggestionsBox.innerHTML = items.map(item => `
+              <div class="suggestion-item" onclick="selectSuggestion('${item.asin}')">
+                <img class="suggestion-img" src="${item.image_url}" alt="">
+                <span class="suggestion-title">${item.title}</span>
+                <span class="suggestion-price">$${item.price.toFixed(2)}</span>
+              </div>
+            `).join('');
+            suggestionsBox.style.display = 'block';
+          } else {
+            suggestionsBox.style.display = 'none';
+          }
+        } catch (e) {
+          suggestionsBox.style.display = 'none';
+        }
+      }, 250);
+    });
+
+    function selectSuggestion(asin) {
+      suggestionsBox.style.display = 'none';
+      openProductDetail(asin);
+    }
+
+    function clearSearch() {
+      searchInput.value = '';
+      searchClear.style.display = 'none';
+      suggestionsBox.style.display = 'none';
+      applyFilters();
+    }
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        suggestionsBox.style.display = 'none';
+        applyFilters();
+      }
+    });
+
+    // Close suggestions when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav-search-bar')) {
+        suggestionsBox.style.display = 'none';
+      }
+    });
+
+    // Filtering & Fetching Products
+    async function applyFilters() {
+      const q = searchInput.value.trim();
+      const catSelect = document.getElementById('search-category').value;
+      const sort = document.getElementById('sort-select').value;
+      const primeOnly = document.getElementById('filter-prime-toggle').checked;
+      const dealsOnly = document.getElementById('filter-deals-toggle').checked;
+      const bestSellersOnly = document.getElementById('filter-bestseller-toggle').checked;
+
+      const pMin = document.getElementById('price-min').value;
+      const pMax = document.getElementById('price-max').value;
+
+      let url = `/api/products?sort=${sort}`;
+      if (q) url += `&q=${encodeURIComponent(q)}`;
+      if (catSelect !== 'All') url += `&category=${encodeURIComponent(catSelect)}`;
+      else if (currentDepartment !== 'All') url += `&department=${encodeURIComponent(currentDepartment)}`;
+      if (currentMinRating) url += `&min_rating=${currentMinRating}`;
+      if (primeOnly) url += `&prime_only=true`;
+      if (dealsOnly) url += `&deals_only=true`;
+      if (bestSellersOnly) url += `&best_sellers_only=true`;
+      if (pMin) url += `&min_price=${pMin}`;
+      if (pMax) url += `&max_price=${pMax}`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        renderProducts(data.products || []);
+        document.getElementById('visible-products-count').textContent = data.count || 0;
+        document.getElementById('results-count-text').innerHTML = q
+          ? `Showing <strong>${data.count}</strong> results for "<strong>${q}</strong>"`
+          : `Showing <strong>${data.count}</strong> products in live catalog`;
+      } catch (err) {
+        showToast('Error loading products', 'error');
+      }
+    }
+
+    function selectDepartment(dept) {
+      currentDepartment = dept;
+      document.getElementById('search-category').value = 'All';
+      // update active sidebar item
+      document.querySelectorAll('.filters-sidebar .filter-link').forEach(link => {
+        link.classList.toggle('active', link.textContent.trim().toLowerCase().includes(dept.toLowerCase()));
+      });
+      applyFilters();
+      document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function filterByDepartment(dept) {
+      selectDepartment(dept);
+    }
+
+    function filterBySearch(keyword) {
+      searchInput.value = keyword;
+      searchClear.style.display = 'block';
+      applyFilters();
+      document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function filterByDeals() {
+      document.getElementById('filter-deals-toggle').checked = true;
+      applyFilters();
+      document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function filterByBestSellers() {
+      document.getElementById('filter-bestseller-toggle').checked = true;
+      applyFilters();
+      document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function filterByMinRating(rating) {
+      currentMinRating = rating;
+      applyFilters();
+    }
+
+    function setPriceRange(min, max) {
+      document.getElementById('price-min').value = min || '';
+      document.getElementById('price-max').value = max || '';
+      applyFilters();
+    }
+
+    function resetAllFilters(e) {
+      if (e) e.preventDefault();
+      searchInput.value = '';
+      searchClear.style.display = 'none';
+      document.getElementById('search-category').value = 'All';
+      document.getElementById('filter-prime-toggle').checked = false;
+      document.getElementById('filter-deals-toggle').checked = false;
+      document.getElementById('filter-bestseller-toggle').checked = false;
+      document.getElementById('price-min').value = '';
+      document.getElementById('price-max').value = '';
+      currentDepartment = 'All';
+      currentMinRating = null;
+      applyFilters();
+    }
+
+    function renderProducts(products) {
+      const grid = document.getElementById('products-grid');
+      if (!products.length) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; background: white; padding: 40px 20px; text-align: center; border-radius: 6px;">
+            <i class="fa-solid fa-magnifying-glass" style="font-size: 38px; color: #ccc; margin-bottom: 12px;"></i>
+            <h3 style="font-size: 18px; margin-bottom: 6px;">No products match your search or filter</h3>
+            <p style="color: #666; font-size: 14px; margin-bottom: 16px;">Try checking your spelling or use more general terms.</p>
+            <button class="btn-amazon-primary" style="max-width: 220px; margin: 0 auto;" onclick="resetAllFilters()">Reset All Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = products.map(p => {
+        let starsHtml = '';
+        for (let i = 0; i < 5; i++) {
+          starsHtml += i < Math.floor(p.rating)
+            ? '<i class="fa-solid fa-star"></i>'
+            : '<i class="fa-regular fa-star"></i>';
+        }
+
+        let badgeHtml = '';
+        if (p.is_best_seller) {
+          badgeHtml = '<span class="badge-bestseller">#1 Best Seller</span>';
+        } else if (p.is_amazons_choice) {
+          badgeHtml = '<span class="badge-choice">Amazon\'s <span>Choice</span></span>';
+        } else if (p.discount_percent > 15) {
+          badgeHtml = `<span class="badge-deal">Save ${p.discount_percent}%</span>`;
+        }
+
+        return `
+          <article class="product-card" data-asin="${p.asin}">
+            <div class="card-badge-container">${badgeHtml}</div>
+            <button class="card-wishlist-btn" onclick="toggleWishlist('${p.asin}', this)" title="Add to Wish List">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <div class="card-image-box" onclick="openProductDetail('${p.asin}')">
+              <img class="card-image" src="${p.image_url}" alt="${p.title}" loading="lazy">
+            </div>
+            <div class="card-brand">${p.brand}</div>
+            <h3 class="card-title" onclick="openProductDetail('${p.asin}')" title="${p.title}">${p.title}</h3>
+            <div class="card-rating-row">
+              <div class="card-stars">${starsHtml}</div>
+              <span class="card-rating-count">${p.rating_count.toLocaleString()}</span>
+            </div>
+            <div class="card-price-row">
+              ${p.discount_percent > 0 ? `<span class="card-discount-badge">-${p.discount_percent}%</span>` : ''}
+              <span class="card-price-curr">$</span>
+              <span class="card-price-val">${p.price.toFixed(2)}</span>
+              ${p.original_price ? `<span class="card-price-orig">$${p.original_price.toFixed(2)}</span>` : ''}
+            </div>
+            <div class="card-prime-row">
+              ${p.is_prime ? `<span class="prime-logo">prime</span><span>FREE delivery <strong>Tomorrow</strong></span>` : `<span>Delivery within 3-4 days</span>`}
+            </div>
+            ${p.units_in_stock > 10
+              ? `<div class="card-stock">In Stock</div>`
+              : (p.units_in_stock > 0
+                ? `<div class="card-stock low">Only ${p.units_in_stock} left in stock - order soon.</div>`
+                : `<div class="card-stock low">Currently unavailable</div>`)}
+            <div class="card-actions">
+              ${p.units_in_stock > 0
+                ? `<button class="btn-add-cart" onclick="addToCart('${p.asin}', 1)"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>`
+                : `<button class="btn-add-cart" disabled style="opacity: 0.5; background: #ddd; border-color: #ccc; cursor: not-allowed;">Out of Stock</button>`}
+              <button class="btn-quick-view" onclick="openProductDetail('${p.asin}')">Quick View</button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // ==========================================
+    // PRODUCT DETAIL MODAL & REVIEWS
+    // ==========================================
+    let activeProductAsin = null;
+    let selectedReviewRating = 5;
+
+    async function openProductDetail(asin) {
+      activeProductAsin = asin;
+      try {
+        const res = await fetch(`/api/products/${asin}`);
+        if (!res.ok) throw new Error('Product not found');
+        const p = await res.json();
+
+        // Record glance view analytics in background
+        fetch('/api/view-product', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ asin: p.asin, device_type: 'desktop' })
+        }).catch(() => {});
+
+        const images = [p.image_url, ...(p.additional_images || [])];
+        const bulletsHtml = (p.features && p.features.length)
+          ? `<ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul>`
+          : `<p>${p.description}</p>`;
+
+        let starsHtml = '';
+        for (let i = 0; i < 5; i++) {
+          starsHtml += i < Math.floor(p.rating)
+            ? '<i class="fa-solid fa-star"></i>'
+            : '<i class="fa-regular fa-star"></i>';
+        }
+
+        const reviewsListHtml = (p.reviews && p.reviews.length)
+          ? p.reviews.map(r => `
+            <div class="review-item">
+              <div class="review-author">
+                <div class="review-author-avatar"><i class="fa-solid fa-user"></i></div>
+                <span>${r.customer_name}</span>
+              </div>
+              <div class="review-item-rating">
+                <span style="color: var(--star-color);">
+                  ${'<i class="fa-solid fa-star"></i>'.repeat(r.rating)}
+                </span>
+                <span class="review-item-title">${r.title}</span>
+              </div>
+              <div style="font-size: 11px; color: #777;">Reviewed on ${r.date} · <span class="review-verified">Verified Purchase</span></div>
+              <p class="review-item-text">${r.text}</p>
+            </div>
+          `).join('')
+          : '<p style="color: #666; font-size: 13px;">No customer reviews yet. Be the first to review this product!</p>';
+
+        document.getElementById('pdp-content').innerHTML = `
+          <!-- Gallery -->
+          <div class="pdp-gallery">
+            <div class="pdp-main-img-box">
+              <img id="pdp-active-img" class="pdp-main-img" src="${images[0]}" alt="${p.title}">
+            </div>
+            <div class="pdp-thumb-row">
+              ${images.map((img, idx) => `
+                <img class="pdp-thumb ${idx === 0 ? 'active' : ''}" src="${img}" alt="" onclick="switchPdpImage('${img}', this)">
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Product Info & Buybox -->
+          <div class="pdp-info">
+            <a class="pdp-brand-link">Brand: ${p.brand}</a>
+            <h1 class="pdp-title">${p.title}</h1>
+            <div class="pdp-ratings-line">
+              <span style="color: var(--star-color); font-size: 14px;">${starsHtml}</span>
+              <span style="font-weight: 700;">${p.rating} out of 5</span>
+              <span style="color: var(--amazon-link); cursor: pointer;" onclick="document.getElementById('reviews-anchor').scrollIntoView({behavior: 'smooth'})">
+                ${p.rating_count.toLocaleString()} ratings
+              </span>
+            </div>
+
+            <div class="pdp-price-box">
+              ${p.discount_percent > 0 ? `<span class="pdp-discount-tag">-${p.discount_percent}%</span>` : ''}
+              <span class="pdp-price">$${p.price.toFixed(2)}</span>
+              ${p.original_price ? `<span class="pdp-orig-price">Typical price: $${p.original_price.toFixed(2)}</span>` : ''}
+              <div style="margin-top: 6px; font-size: 13px; color: #565959;">
+                ${p.is_prime ? `<span class="prime-logo">prime</span> Enjoy FREE Two-Day Delivery` : 'Eligible for Standard Shipping'}
+              </div>
+            </div>
+
+            <div class="pdp-bullets">
+              <h4>About this item</h4>
+              ${bulletsHtml}
+            </div>
+
+            <!-- Buy Box -->
+            <div class="pdp-buybox">
+              <div class="pdp-buybox-price">$${p.price.toFixed(2)}</div>
+              <div class="pdp-delivery-promise">
+                <i class="fa-solid fa-truck" style="color: #007600;"></i> FREE delivery <strong>Tomorrow</strong> to <span id="pdp-city-label">${document.getElementById('nav-deliver-city').textContent}</span>
+              </div>
+              <div class="card-stock" style="margin-bottom: 8px;">
+                ${p.units_in_stock > 0 ? `${p.units_in_stock} in stock` : 'Currently out of stock'}
+              </div>
+
+              ${p.units_in_stock > 0 ? `
+                <div class="pdp-qty-row">
+                  <label for="pdp-qty-select">Quantity:</label>
+                  <select class="pdp-qty-select" id="pdp-qty-select">
+                    ${[1,2,3,4,5].filter(q => q <= p.units_in_stock).map(q => `<option value="${q}">${q}</option>`).join('')}
+                  </select>
+                </div>
+                <div class="pdp-actions-row">
+                  <button class="btn-pdp-cart" onclick="addToCart('${p.asin}', parseInt(document.getElementById('pdp-qty-select').value))">
+                    <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                  </button>
+                  <button class="btn-pdp-buy" onclick="buyNowSingle('${p.asin}', parseInt(document.getElementById('pdp-qty-select').value))">
+                    Buy Now
+                  </button>
+                  <button class="btn-quick-view" onclick="toggleWishlist('${p.asin}')">
+                    <i class="fa-regular fa-heart"></i> Add to Wish List
+                  </button>
+                </div>
+              ` : `
+                <button class="btn-pdp-cart" disabled style="opacity: 0.5; background: #ddd; border-color: #ccc; cursor: not-allowed;">
+                  Currently Unavailable
+                </button>
+              `}
+            </div>
+          </div>
+
+          <!-- Reviews Section -->
+          <div class="pdp-reviews-section" id="reviews-anchor">
+            <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 20px;">Customer Reviews & Ratings</h2>
+            <div class="reviews-layout">
+              <!-- Summary & Write Review Form -->
+              <div class="review-summary-box">
+                <div class="review-score-big">${p.rating}</div>
+                <div class="review-score-stars">${starsHtml}</div>
+                <div style="font-size: 13px; color: #565959; margin-bottom: 14px;">${p.rating_count.toLocaleString()} global ratings</div>
+
+                <!-- Write Review Box -->
+                <div class="write-review-card">
+                  <h4>Review this product</h4>
+                  <p style="font-size: 12px; color: #555; margin-bottom: 8px;">Share your thoughts with other customers</p>
+                  <div class="star-picker" id="review-stars-picker">
+                    <i class="fa-solid fa-star selected" data-star="1" onclick="setStarRating(1)"></i>
+                    <i class="fa-solid fa-star selected" data-star="2" onclick="setStarRating(2)"></i>
+                    <i class="fa-solid fa-star selected" data-star="3" onclick="setStarRating(3)"></i>
+                    <i class="fa-solid fa-star selected" data-star="4" onclick="setStarRating(4)"></i>
+                    <i class="fa-solid fa-star selected" data-star="5" onclick="setStarRating(5)"></i>
+                  </div>
+                  <input type="text" class="review-input" id="rev-title" placeholder="Headline for your review">
+                  <textarea class="review-textarea" id="rev-text" placeholder="Write your verified review here..."></textarea>
+                  <button class="btn-amazon-primary" onclick="submitReview('${p.asin}')">Submit Review</button>
+                </div>
+              </div>
+
+              <!-- Reviews List -->
+              <div class="reviews-list" id="pdp-reviews-list">
+                ${reviewsListHtml}
+              </div>
+            </div>
+          </div>
+        `;
+
+        openModal('pdp-modal');
+      } catch (e) {
+        showToast(e.message || 'Error loading product', 'error');
+      }
+    }
+
+    function switchPdpImage(src, thumbEl) {
+      document.getElementById('pdp-active-img').src = src;
+      document.querySelectorAll('.pdp-thumb').forEach(t => t.classList.remove('active'));
+      thumbEl.classList.add('active');
+    }
+
+    function setStarRating(stars) {
+      selectedReviewRating = stars;
+      const icons = document.querySelectorAll('#review-stars-picker i');
+      icons.forEach((icon, idx) => {
+        icon.className = idx < stars ? 'fa-solid fa-star selected' : 'fa-regular fa-star';
+      });
+    }
+
+    async function submitReview(asin) {
+      const title = document.getElementById('rev-title').value.trim();
+      const text = document.getElementById('rev-text').value.trim();
+      if (!title || !text) {
+        showToast('Please provide a review headline and text', 'error');
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/products/${asin}/reviews`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            rating: selectedReviewRating,
+            title: title,
+            text: text
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to submit review');
+
+        showToast('Review submitted! Thank you for your feedback.', 'success');
+        // Re-open/refresh modal
+        openProductDetail(asin);
+        // Refresh product card
+        applyFilters();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    // ==========================================
+    // CART OPERATIONS
+    // ==========================================
+    async function addToCart(asin, qty = 1) {
+      try {
+        const res = await fetch('/api/cart/add', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ asin, quantity: qty })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Could not add to cart');
+
+        updateCartBadges(data.cart_count);
+        showToast(`Added to cart! Total items: ${data.cart_count}`);
+        openCartDrawer();
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    function updateCartBadges(count) {
+      document.getElementById('nav-cart-count').textContent = count;
+      const quadCount = document.getElementById('quad-cart-count');
+      if (quadCount) quadCount.textContent = count;
+    }
+
+    async function openCartDrawer() {
+      try {
+        const res = await fetch('/api/cart');
+        const cart = await res.json();
+
+        updateCartBadges(cart.count);
+        document.getElementById('cart-drawer-items-count').textContent = cart.count;
+        document.getElementById('cart-drawer-subtotal').textContent = `$${cart.subtotal.toFixed(2)}`;
+
+        const container = document.getElementById('cart-items-container');
+        let html = '';
+
+        if (cart.qualifies_free_shipping && cart.subtotal > 0) {
+          html += `
+            <div class="cart-qualify-banner">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Your order qualifies for <strong>FREE Delivery</strong></span>
+            </div>
+          `;
+        }
+
+        if (!cart.items.length) {
+          html += `
+            <div style="text-align: center; padding: 40px 10px; color: #555;">
+              <i class="fa-solid fa-cart-shopping" style="font-size: 42px; color: #ddd; margin-bottom: 12px;"></i>
+              <h3 style="font-size: 16px; margin-bottom: 6px;">Your Amazon Cart is empty</h3>
+              <p style="font-size: 13px; color: #888;">Shop today's deals or check out featured picks.</p>
+            </div>
+          `;
+        } else {
+          html += cart.items.map(item => `
+            <div class="cart-item">
+              <img class="cart-item-img" src="${item.image_url}" alt="">
+              <div class="cart-item-info">
+                <div class="cart-item-title">${item.title}</div>
+                <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                <div class="cart-item-controls">
+                  <div class="cart-qty-stepper">
+                    <button class="cart-qty-btn" onclick="updateCartItemQty('${item.asin}', ${item.quantity - 1})">-</button>
+                    <span class="cart-qty-val">${item.quantity}</span>
+                    <button class="cart-qty-btn" onclick="updateCartItemQty('${item.asin}', ${item.quantity + 1})">+</button>
+                  </div>
+                  <span class="cart-item-link-btn" onclick="removeCartItem('${item.asin}')">Delete</span>
+                  <span class="cart-item-link-btn" onclick="saveForLater('${item.asin}')">Save for later</span>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        // Saved for later
+        if (cart.saved_items && cart.saved_items.length) {
+          html += `
+            <div class="cart-saved-section">
+              <h3>Saved for later (${cart.saved_items.length} items)</h3>
+              ${cart.saved_items.map(item => `
+                <div class="cart-item">
+                  <img class="cart-item-img" src="${item.image_url}" alt="">
+                  <div class="cart-item-info">
+                    <div class="cart-item-title">${item.title}</div>
+                    <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                    <div class="cart-item-controls">
+                      <button class="btn-quick-view" style="padding: 4px 10px;" onclick="moveToCart('${item.asin}')">Move to cart</button>
+                      <span class="cart-item-link-btn" onclick="removeCartItem('${item.asin}')">Delete</span>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+
+        container.innerHTML = html;
+        document.getElementById('cart-drawer').classList.add('open');
+        document.getElementById('cart-drawer-backdrop').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      } catch (err) {
+        showToast('Error opening cart', 'error');
+      }
+    }
+
+    function closeCartDrawer() {
+      document.getElementById('cart-drawer').classList.remove('open');
+      document.getElementById('cart-drawer-backdrop').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    async function updateCartItemQty(asin, qty) {
+      try {
+        const res = await fetch('/api/cart/update', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ asin, quantity: qty })
+        });
+        if (!res.ok) throw new Error('Could not update cart');
+        openCartDrawer();
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    async function removeCartItem(asin) {
+      try {
+        const res = await fetch('/api/cart/remove', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ asin })
+        });
+        if (!res.ok) throw new Error('Could not remove item');
+        showToast('Item removed from cart');
+        openCartDrawer();
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    async function saveForLater(asin) {
+      try {
+        const res = await fetch('/api/cart/save-for-later', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ asin })
+        });
+        if (!res.ok) throw new Error('Could not save item');
+        showToast('Saved for later');
+        openCartDrawer();
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    async function moveToCart(asin) {
+      try {
+        const res = await fetch('/api/cart/move-to-cart', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ asin })
+        });
+        if (!res.ok) throw new Error('Could not move item to cart');
+        showToast('Moved to cart');
+        openCartDrawer();
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    // ==========================================
+    // CHECKOUT FLOW
+    // ==========================================
+    async function proceedToCheckout() {
+      closeCartDrawer();
+      checkoutDirectItem = null;
+      await prepareCheckoutModal();
+      openModal('checkout-modal');
+    }
+
+    async function buyNowSingle(asin, units = 1) {
+      closeModal('pdp-modal');
+      checkoutDirectItem = { asin, units };
+      await prepareCheckoutModal();
+      openModal('checkout-modal');
+    }
+
+    async function prepareCheckoutModal() {
+      document.getElementById('checkout-form-container').style.display = 'block';
+      document.getElementById('checkout-success-view').style.display = 'none';
+
+      let subtotal = 0;
+      if (checkoutDirectItem) {
+        const res = await fetch(`/api/products/${checkoutDirectItem.asin}`);
+        const p = await res.json();
+        subtotal = p.price * checkoutDirectItem.units;
+      } else {
+        const res = await fetch('/api/cart');
+        const cart = await res.json();
+        subtotal = cart.subtotal;
+      }
+
+      window.activeSubtotal = subtotal;
+      updateCheckoutTotal();
+    }
+
+    function updateCheckoutTotal() {
+      const subtotal = window.activeSubtotal || 0;
+      const deliverySpeedRadios = document.querySelectorAll('input[name="delivery_speed"]');
+      let shippingCost = 0;
+      deliverySpeedRadios.forEach(r => {
+        if (r.checked && r.value.includes('One-Day')) shippingCost = 4.99;
+      });
+
+      const tax = +(subtotal * 0.08).toFixed(2);
+      const grandTotal = +(subtotal + shippingCost + tax).toFixed(2);
+
+      document.getElementById('co-items-total').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('co-shipping-total').textContent = shippingCost > 0 ? `$${shippingCost.toFixed(2)}` : 'FREE';
+      document.getElementById('co-tax-total').textContent = `$${tax.toFixed(2)}`;
+      document.getElementById('co-grand-total').textContent = `$${grandTotal.toFixed(2)}`;
+    }
+
+    async function executeCheckout() {
+      const btn = document.getElementById('btn-place-order');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Placing your order...';
+
+      const payload = {
+        shipping_name: document.getElementById('co-name').value.trim(),
+        shipping_address: document.getElementById('co-address').value.trim(),
+        shipping_city: document.getElementById('co-city').value.trim(),
+        shipping_postal_code: document.getElementById('co-zip').value.trim(),
+        payment_method: document.querySelector('input[name="payment_method"]:checked').value,
+        delivery_speed: document.querySelector('input[name="delivery_speed"]:checked').value
+      };
+
+      if (checkoutDirectItem) {
+        payload.asin = checkoutDirectItem.asin;
+        payload.ordered_units = checkoutDirectItem.units;
+      }
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Checkout failed');
+
+        // Show confirmation view
+        document.getElementById('checkout-form-container').style.display = 'none';
+        document.getElementById('checkout-success-view').style.display = 'block';
+
+        document.getElementById('conf-order-id').textContent = data.order_id;
+        document.getElementById('conf-tracking-id').textContent = data.tracking_number;
+        document.getElementById('conf-delivery-date').textContent = data.delivery_date;
+        document.getElementById('conf-ship-to').textContent = `${data.shipping_name}, ${data.shipping_address}`;
+        document.getElementById('conf-total').textContent = `$${data.total_amount.toFixed(2)}`;
+
+        // Refresh cart badge and products grid (inventory updated)
+        updateCartBadges(0);
+        applyFilters();
+      } catch (err) {
+        showToast(err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-lock"></i> Place your order in USD';
+      }
+    }
+
+    // ==========================================
+    // YOUR ORDERS & PACKAGE TRACKING
+    // ==========================================
+    async function openOrdersModal() {
+      try {
+        const res = await fetch('/api/orders');
+        const data = await res.json();
+        const container = document.getElementById('orders-container');
+
+        if (!data.orders || !data.orders.length) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #555;">
+              <i class="fa-solid fa-box-open" style="font-size: 44px; color: #ccc; margin-bottom: 12px;"></i>
+              <h3 style="font-size: 18px; margin-bottom: 6px;">No orders found</h3>
+              <p style="color: #888; font-size: 13px; margin-bottom: 16px;">Looks like you haven't placed an order yet.</p>
+              <button class="btn-amazon-primary" style="max-width: 220px; margin: 0 auto;" onclick="closeModal('orders-modal');">Explore Today's Deals</button>
+            </div>
+          `;
+        } else {
+          container.innerHTML = data.orders.map(order => {
+            const isCancelled = order.order_status === 'Cancelled';
+            const isDelivered = order.order_status === 'Delivered';
+            const isOut = order.order_status === 'Out for Delivery';
+            const isShipped = order.order_status === 'Shipped';
+            const isOrdered = order.order_status === 'Ordered';
+
+            let progressPct = 15;
+            if (isShipped) progressPct = 45;
+            if (isOut) progressPct = 75;
+            if (isDelivered) progressPct = 100;
+
+            return `
+              <div class="order-card">
+                <div class="order-card-header">
+                  <div>ORDER PLACED<strong>${order.order_date}</strong></div>
+                  <div>TOTAL<strong>$${order.total_amount.toFixed(2)}</strong></div>
+                  <div>SHIP TO<strong>${order.shipping_name}</strong></div>
+                  <div>ORDER # ${order.order_id.slice(0, 8)}...</div>
+                </div>
+                <div class="order-card-body">
+                  <div class="order-status-banner ${isCancelled ? 'cancelled' : ''}">
+                    ${isCancelled ? '<i class="fa-solid fa-circle-xmark"></i> Order Cancelled' : `<i class="fa-solid fa-truck"></i> ${order.order_status} — Arriving ${order.delivery_date}`}
+                  </div>
+
+                  ${!isCancelled ? `
+                    <div class="tracking-stepper">
+                      <div class="tracking-line">
+                        <div class="tracking-line-progress" style="width: ${progressPct}%;"></div>
+                      </div>
+                      <div class="tracking-step done">
+                        <div class="tracking-dot"><i class="fa-solid fa-check"></i></div>
+                        <span>Ordered</span>
+                      </div>
+                      <div class="tracking-step ${isShipped || isOut || isDelivered ? 'done' : ''}">
+                        <div class="tracking-dot"><i class="fa-solid fa-box"></i></div>
+                        <span>Shipped</span>
+                      </div>
+                      <div class="tracking-step ${isOut || isDelivered ? 'done' : ''}">
+                        <div class="tracking-dot"><i class="fa-solid fa-truck-fast"></i></div>
+                        <span>Out for delivery</span>
+                      </div>
+                      <div class="tracking-step ${isDelivered ? 'done' : ''}">
+                        <div class="tracking-dot"><i class="fa-solid fa-house"></i></div>
+                        <span>Delivered</span>
+                      </div>
+                    </div>
+                  ` : ''}
+
+                  <div class="order-items-list">
+                    ${order.items.map(it => `
+                      <div class="order-item-row">
+                        <img class="order-item-img" src="${it.image_url}" alt="">
+                        <div class="order-item-details">
+                          <strong style="cursor: pointer;" onclick="openProductDetail('${it.asin}')">${it.title}</strong>
+                          <div style="color: #666; font-size: 12px;">Qty: ${it.units} · $${it.price.toFixed(2)} each</div>
+                          <div style="color: #555; font-size: 11px; margin-top: 2px;">Tracking: <code>${order.tracking_number}</code></div>
+                        </div>
+                        <div class="order-item-actions">
+                          <button class="btn-order-action" onclick="addToCart('${it.asin}', 1)"><i class="fa-solid fa-rotate-right"></i> Buy it again</button>
+                        </div>
+                      </div>
+                    `).join('')}
+                  </div>
+
+                  <div style="display: flex; gap: 10px; margin-top: 14px; border-top: 1px solid #eee; padding-top: 12px; justify-content: flex-end;">
+                    <button class="btn-order-action" onclick="showInvoice('${order.order_id}')"><i class="fa-solid fa-receipt"></i> View Invoice</button>
+                    ${order.can_cancel ? `
+                      <button class="btn-order-action" style="color: #c45500;" onclick="cancelOrder('${order.order_id}')">Cancel Order</button>
+                    ` : ''}
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+
+        openModal('orders-modal');
+      } catch (e) {
+        showToast('Error loading orders', 'error');
+      }
+    }
+
+    async function cancelOrder(orderId) {
+      if (!confirm('Are you sure you want to cancel this order and restore stock?')) return;
+      try {
+        const res = await fetch(`/api/orders/${orderId}/cancel`, { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to cancel order');
+
+        showToast(data.message);
+        openOrdersModal();
+        applyFilters();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    function showInvoice(orderId) {
+      showToast(`Generating printable invoice receipt for #${orderId.slice(0,8)}...`);
+    }
+
+    // ==========================================
+    // WISHLIST OPERATIONS
+    // ==========================================
+    async function toggleWishlist(asin, btnEl) {
+      try {
+        const res = await fetch('/api/wishlist/toggle', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ asin })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error('Could not update wishlist');
+
+        showToast(data.message);
+        if (btnEl) {
+          const icon = btnEl.querySelector('i');
+          if (data.in_wishlist) {
+            btnEl.classList.add('active');
+            icon.className = 'fa-solid fa-heart';
+          } else {
+            btnEl.classList.remove('active');
+            icon.className = 'fa-regular fa-heart';
+          }
+        }
+      } catch (err) {
+        showToast('Could not update wishlist', 'error');
+      }
+    }
+
+    async function openWishlistModal() {
+      try {
+        const res = await fetch('/api/wishlist');
+        const data = await res.json();
+        const container = document.getElementById('wishlist-container');
+
+        if (!data.items || !data.items.length) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #555;">
+              <i class="fa-solid fa-heart-crack" style="font-size: 44px; color: #ccc; margin-bottom: 12px;"></i>
+              <h3 style="font-size: 18px; margin-bottom: 6px;">Your Wish List is empty</h3>
+              <p style="color: #888; font-size: 13px;">Save items you love by clicking the heart on any product.</p>
+            </div>
+          `;
+        } else {
+          container.innerHTML = data.items.map(item => `
+            <div class="cart-item" style="align-items: center;">
+              <img class="cart-item-img" src="${item.image_url}" alt="">
+              <div class="cart-item-info">
+                <div class="cart-item-title" style="cursor: pointer;" onclick="openProductDetail('${item.asin}')">${item.title}</div>
+                <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                <div style="font-size: 11px; color: #777;">Added on ${item.added_at}</div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn-amazon-primary" style="padding: 6px 14px;" onclick="addToCart('${item.asin}', 1); toggleWishlist('${item.asin}'); openWishlistModal();">
+                  Move to Cart
+                </button>
+                <button class="btn-quick-view" style="padding: 6px 12px;" onclick="toggleWishlist('${item.asin}'); openWishlistModal();">
+                  Remove
+                </button>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        openModal('wishlist-modal');
+      } catch (err) {
+        showToast('Error loading wishlist', 'error');
+      }
+    }
+
+    // ==========================================
+    // AUTHENTICATION & DEMO ACCOUNT
+    // ==========================================
+    function openAuthModal(mode = 'signin') {
+      switchAuthTab(mode);
+      openModal('auth-modal');
+    }
+
+    function switchAuthTab(mode) {
+      currentAuthMode = mode;
+      document.getElementById('tab-signin').classList.toggle('active', mode === 'signin');
+      document.getElementById('tab-register').classList.toggle('active', mode === 'register');
+      document.getElementById('auth-register-name-box').style.display = mode === 'register' ? 'block' : 'none';
+      document.getElementById('auth-submit-btn').textContent = mode === 'register' ? 'Create your Amazon account' : 'Sign In';
+    }
+
+    async function submitAuth() {
+      const email = document.getElementById('auth-email').value.trim();
+      const password = document.getElementById('auth-password').value;
+      const name = document.getElementById('auth-name').value.trim();
+
+      const endpoint = currentAuthMode === 'register' ? '/api/auth/register' : '/api/auth/login';
+      const body = currentAuthMode === 'register'
+        ? { email, password, name }
+        : { email, password };
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Authentication failed');
+
+        showToast(data.message);
+        closeModal('auth-modal');
+        updateUserUI(data.customer);
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function switchDemoAccount() {
+      try {
+        const res = await fetch('/api/auth/demo', { method: 'POST' });
+        const data = await res.json();
+        showToast(data.message);
+        closeModal('auth-modal');
+        updateUserUI(data.customer);
+      } catch (e) {
+        showToast('Error switching to demo account', 'error');
+      }
+    }
+
+    async function logout() {
+      try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+        showToast('Signed out');
+        updateUserUI({ name: 'Sign in', city: 'Seattle', postal_code: '98109' });
+      } catch (e) {
+        showToast('Error signing out', 'error');
+      }
+    }
+
+    function updateUserUI(customer) {
+      const firstName = customer.name.split(' ')[0];
+      document.getElementById('nav-user-firstname').textContent = firstName;
+      document.getElementById('nav-deliver-user').textContent = firstName;
+      document.getElementById('nav-deliver-city').textContent = `${customer.city || 'Seattle'} ${customer.postal_code || '98109'}`;
+      const drawerName = document.getElementById('drawer-user-name');
+      if (drawerName) drawerName.textContent = firstName;
+    }
+
+    // ==========================================
+    // LOCATION MODAL
+    // ==========================================
+    function openLocationModal() {
+      openModal('location-modal');
+    }
+
+    async function setLocationCity(city, zip) {
+      try {
+        const res = await fetch('/api/customer/address', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ city, postal_code: zip })
+        });
+        const data = await res.json();
+        document.getElementById('nav-deliver-city').textContent = `${city} ${zip}`;
+        showToast(`Delivery location updated to ${city} (${zip})`);
+        closeModal('location-modal');
+      } catch (e) {
+        showToast('Could not update location', 'error');
+      }
+    }
+
+    function updateLocationCustom() {
+      const zip = document.getElementById('location-zip-input').value.trim();
+      if (!zip) return;
+      setLocationCity('United States', zip);
+    }
+
+    // ==========================================
+    // CUSTOMER SERVICE & SUPPORT ASSISTANT
+    // ==========================================
+    function openSupportModal() {
+      openModal('support-modal');
+    }
+
+    function sendSupportMessage() {
+      const input = document.getElementById('support-chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const log = document.getElementById('support-chat-log');
+      log.innerHTML += `<p style="margin-top: 6px;"><strong>You:</strong> ${text}</p>`;
+      input.value = '';
+
+      setTimeout(() => {
+        let reply = "I'm happy to help! You can track your package under 'Your Orders' or manage returns free within 30 days.";
+        const lower = text.toLowerCase();
+        if (lower.includes('prime') || lower.includes('shipping')) {
+          reply = "All Prime items include FREE Two-Day delivery, and Priority One-Day delivery is available for $4.99 at checkout.";
+        } else if (lower.includes('cancel') || lower.includes('refund')) {
+          reply = "Orders can be cancelled anytime before dispatch right from your 'Your Orders' page with an instant refund to your payment method.";
+        } else if (lower.includes('payment') || lower.includes('card')) {
+          reply = "We accept Amazon Pay Balance, Visa, MasterCard, and Cash on Delivery.";
+        }
+        log.innerHTML += `<p style="margin-top: 6px; color: var(--navy);"><strong>Amazon Bot:</strong> ${reply}</p>`;
+        log.scrollTop = log.scrollHeight;
+      }, 500);
+    }
+
+    function openLanguageModal() {
+      showToast('Language set to English (US). 5 international languages available in preferences.');
+    }
+
+    function openGiftCardsModal() {
+      showToast('Amazon Gift Cards: Available in denominations from $25 to $500.');
+    }
+
+    function openSellModal() {
+      showToast('Become an Amazon Seller: Start selling to hundreds of millions of customers worldwide!');
+    }
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      initHeroCarousel();
+    });
+  </script>
+</body>
+</html>
