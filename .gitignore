@@ -1,5 +1,12 @@
 .env
+.env.*
+!.env.example
+.vercel/
 .venv/
 venv/
 __pycache__/
 *.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+/product_views_analysis.csv

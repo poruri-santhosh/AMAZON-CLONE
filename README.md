@@ -1,136 +1,220 @@
-# Amazon Clone (Flask + HTML/CSS/JS + Neon PostgreSQL)
+# Amazon Clone | Full-Stack Storefront & Product Analytics
 
-A full-featured Amazon clone built with a **Flask** backend, authentic **HTML5, CSS3, and JavaScript** frontend, and **Neon PostgreSQL** serverless cloud database.
+A full-stack e-commerce learning project that combines an interactive Amazon-inspired storefront with a PostgreSQL-backed product catalog and a separate Python analytics workflow. The project demonstrates how application data can be extracted into CSV, explored with Pandas, segmented into business groups, and presented as visual reports.
 
----
+> **Portfolio/demo project:** this is an independent educational project and is not affiliated with Amazon. The review records in the included analytics sample are synthetic demo data, not verified customer feedback.
 
-## 🚀 Features & Capabilities
+## Project at a glance
 
-### 1. Amazon Navigation & Header
-- **Amazon Logo**: Resets filters and scrolls to top smoothly.
-- **Deliver To Selector**: Interactive modal to select city or enter a custom postal code. Updates delivery estimates across the entire storefront in real-time.
-- **Search Bar with Real-Time Autocomplete**: Live suggestions dropdown with product thumbnails, prices, and direct navigation.
-- **Department Filter**: Dropdown to scope search to any department (Electronics, Computers, Home & Kitchen, Fashion, Books, Beauty).
-- **Language Selector**: Preferences modal (EN, ES, DE, FR, HI).
-- **Accounts & Lists**: Dropdown with Account shortcuts, Sign In, Register, Switch to Demo Account, and Sign Out.
-- **Returns & Orders**: Quick access to past orders and live package tracking.
-- **Cart Badge**: Real-time badge counter synchronized with Neon PostgreSQL and session storage.
+| Layer | Technology | Purpose |
+|---|---|---|
+| Storefront | HTML, CSS, JavaScript | Responsive shopping experience and interactive catalog |
+| Web application | Python, Flask | Store pages, APIs, sessions, authentication, cart, wishlist, and checkout |
+| Database | PostgreSQL on Neon | Persistent catalog, customer, traffic, review, inventory, and order data |
+| Analytics | Python, Pandas, Matplotlib | CSV extraction, data-quality checks, EDA, portfolio segmentation, and charts |
 
-### 2. Secondary Sub-Nav & Amazon "All" Drawer
-- **Hamburger Menu (`☰ All`)**: Slide-out navigation drawer with department links, trending categories, and account settings.
-- **Quick Links**: Today's Deals, Best Sellers, Electronics, Computers, Home & Kitchen, Fashion, Books, Gift Cards, Customer Service, and Sell on Amazon.
+## Storefront capabilities
 
-### 3. Hero Carousel Banner
-- Auto-rotating promotional banners with previous/next navigation buttons.
-- Bottom gradient fade blending into product cards below.
+- Search, autocomplete, category filters, sorting, and product detail views
+- Product ratings, customer reviews, and review submission
+- Session-aware account flows, demo account, cart, saved items, and wishlist
+- Checkout, delivery options, order history, and package tracking
+- Customer support interface and responsive storefront layout
 
-### 4. Amazon 4-in-1 Quad Cards
-- Interactive 4-quadrant cards for Electronics, Home & Kitchen, Fashion, and Quick Services.
+## Application and analytics data flow
 
-### 5. Product Catalog & Faceted Filters
-- **Filter Sidebar**:
-  - Filter by Department / Category.
-  - Filter by Customer Rating (4★ & Up, 4.5★ & Up).
-  - Filter by Price (Under \$25, \$25–\$50, \$50–\$100, \$100–\$500, \$500+, or Custom Min/Max range).
-  - Special Offers: Prime eligible only, Today's Deals only, Best Sellers only.
-- **Sorting**: Featured, Price: Low to High, Price: High to Low, Avg. Customer Review, Newest Arrivals.
+The web application and the analytics workflow use the same Neon database for different purposes:
 
-### 6. Interactive Product Detail Modal
-- Image gallery with clickable thumbnails and image zoom preview.
-- Amazon's Choice & #1 Best Seller badges.
-- Pricing with discount percentages, typical price, and Prime delivery promise.
-- Stock availability and Quantity selector (1–10).
-- **Add to Cart**, **Buy Now** (instant direct checkout), and **Add to Wish List**.
-- "About this item" bulleted features and technical specifications.
-- **Verified Customer Reviews**:
-  - Star ratings breakdown.
-  - Interactive **Write a Review** form: submit ratings (1–5 stars), review headline, and detailed feedback that writes directly to Neon PostgreSQL and recalculates average rating.
+```text
+Browser
+  │  HTTP requests
+  ▼
+Flask application (app.py)
+  │  parameterized PostgreSQL queries
+  ▼
+Neon PostgreSQL ───────────────────────────────────────┐
+  │                                                    │
+  │ analytics export scripts                           │ storefront reads/writes
+  ▼                                                    │
+data/raw/product_views_analysis.csv                    │
+  │                                                    │
+  ├── Pandas EDA: quality, distributions, outliers     │
+  ├── portfolio gates: rating ≥ 4.2, views ≥ 20        │
+  └── processed CSVs + Matplotlib PNG charts           │
+                                                       ▼
+                                                Storefront APIs
+```
 
-### 7. Slide-Over Shopping Cart
-- Slide-over drawer with active cart items and "Saved for Later" section.
-- Quantity adjuster (`[-] [qty] [+]`), item removal, and "Save for later" toggle.
-- Free delivery qualification progress bar.
-- Subtotal calculation in real-time.
+The raw product CSV is an analytics snapshot, not the application's live database. The export script aggregates catalog products with glance-view traffic. The review export joins product, traffic, and review data to produce an at-risk review extract. Pandas reads these CSV snapshots for repeatable analysis; segmentation and chart scripts then write derived datasets and images to their own folders.
 
-### 8. Multi-Step Checkout System
-- **Step 1: Shipping Address**: Pre-filled with active user profile, or editable.
-- **Step 2: Payment Method**: Amazon Pay Balance, Credit/Debit Card (Visa ending in 4242), or Cash on Delivery (COD).
-- **Step 3: Delivery Options**: FREE Two-Day Shipping or Priority One-Day Shipping (+\$4.99).
-- **Atomic Database Transaction**: Verifies inventory, decrements stock in `retail_inventory.fact_fba_inventory_daily`, creates order in `retail_sales.fact_orders`, records line items in `retail_sales.fact_order_items`, and clears cart.
-- **Order Confirmation Receipt**: Displays unique Order ID, Tracking number, Estimated delivery date, and total.
+The current sample contains **79 products** and the following fields in the raw product export: `asin`, `product_title`, `total_views`, `average_rating`, and `standard_price`. The sample review export is synthetic and should be treated as demonstration data only.
 
-### 9. Your Orders & Package Tracking
-- Visual multi-step package tracker:
-  `[Ordered] ──► [Shipped] ──► [Out for Delivery] ──► [Delivered]`
-- Action buttons: "Buy it again", "View Invoice", and "Cancel Order" (restores stock back to inventory).
+### Analytics visuals
 
-### 10. Wishlist (Shopping List)
-- 1-click heart toggle on product cards and detail modal.
-- Wishlist modal with "Move to Cart" and "Remove".
+All generated charts are saved in [`reports/visualisations/`](reports/visualisations/).
 
-### 11. User Authentication & Profile
-- Sign In & Create Account modal.
-- 1-Click **Switch to Demo Account (Alex Mercer)** for instant testing without typing credentials.
-- Password hashing with Werkzeug security.
+#### Portfolio segmentation
 
-### 12. Customer Service & Support Hub
-- Quick help cards (Orders, Returns & Refunds, Shipping Rates).
-- Interactive simulated AI support assistant for immediate queries.
+Products are grouped using two explicit gates: high rating is **≥ 4.2** and high traffic is **≥ 20 views**.
 
----
+![Product portfolio segmentation matrix](reports/visualisations/SEGMENTATION.png)
 
-## 🛠️ Tech Stack & Database Architecture
+#### Traffic distribution and outlier check
 
-- **Backend**: Python 3.10+ / Flask
-- **Database**: Neon Serverless PostgreSQL (`sa-east-1` AWS pooler)
-- **Frontend**: HTML5, Modern CSS3 (Amazon Ember styling, responsive design), Vanilla JavaScript (ES6+ fetch API)
-- **Icons**: FontAwesome 6 (CDN)
+The boxplot applies the 1.5×IQR outlier rule. The histogram zooms into the 0–100-view range so the bulk of products is visible beside high-traffic outliers.
 
-### Neon Database Schemas:
-- `catalog.dim_categories`
-- `catalog.dim_products`
-- `catalog.dim_reviews`
-- `customers.dim_customers`
-- `customers.cart_items`
-- `customers.wishlists`
-- `retail_inventory.fact_fba_inventory_daily`
-- `retail_sales.fact_orders`
-- `retail_sales.fact_order_items`
-- `retail_traffic.fact_glance_views`
-- `fulfillment.dim_fulfillment_centers`
+![Product views boxplot](reports/visualisations/product_views_boxplot.png)
 
----
+![Product views distribution](reports/visualisations/product_views_distribution.png)
 
-## 🏃 Getting Started
+#### Price, traffic, and rating relationships
 
-### 1. Environment Configuration
-Set your Neon connection URL and a unique Flask session key in `.env`:
-```ini
+The correlation heatmap and scatter plot summarize linear association in this dataset; correlation is descriptive and does not imply causation.
+
+![Product metric correlation heatmap](reports/visualisations/product_metrics_correlation.png)
+
+![Product price versus views](reports/visualisations/product_price_vs_views.png)
+
+See the [executive EDA report](reports/PROJECT_SUMMARY_REPORT.md) for findings, segment counts, review-audit caveats, and recommended actions.
+
+## Database overview
+
+The schema is defined in [`schema.sql`](schema.sql). The application and analysis scripts use these logical areas:
+
+| Schema | Example tables | Role |
+|---|---|---|
+| `catalog` | `dim_products`, `dim_categories`, `dim_reviews` | Product catalog, categories, and reviews |
+| `customers` | `dim_customers`, `cart_items`, `wishlists` | Customer profiles and shopping state |
+| `retail_traffic` | `fact_glance_views` | Product traffic events used in analytics |
+| `retail_inventory` | `fact_fba_inventory_daily` | Inventory availability |
+| `retail_sales` | `fact_orders`, `fact_order_items` | Order and line-item records |
+| `fulfillment` | `dim_fulfillment_centers` | Fulfillment center reference data |
+
+## Repository layout
+
+```text
+.
+├── app.py                         # Flask application
+├── templates/
+│   └── index.html                 # Storefront UI
+├── data/
+│   ├── raw/                       # Source analytics CSV snapshot
+│   └── processed/                 # Segmentation and review CSV outputs
+├── eda/
+│   ├── visualisations/            # Chart-generation scripts
+│   └── *.py                       # EDA, exports, and portfolio analysis
+├── reports/
+│   ├── visualisations/            # Generated PNG charts embedded above
+│   └── PROJECT_SUMMARY_REPORT.md  # Executive analysis report
+├── schema.sql                     # PostgreSQL DDL
+├── seed_data.py                  # Demo database seeding
+├── requirements.txt              # Storefront dependencies
+└── requirements-eda.txt          # Analytics dependencies
+```
+
+## Local setup
+
+### 1. Requirements
+
+- Python 3.10 or newer
+- A PostgreSQL database (Neon is used by the hosted demo)
+- Optional: `psql` to initialize the schema from the command line
+
+### 2. Install dependencies and configure environment
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m pip install -r requirements-eda.txt
+Copy-Item .env.example .env
+```
+
+Edit `.env` and set your own values:
+
+```dotenv
 DATABASE_URL=postgresql://USER:PASSWORD@HOST/DATABASE?sslmode=require
-FLASK_SECRET_KEY=replace-with-a-random-secret
+FLASK_SECRET_KEY=replace-with-a-long-random-secret
 FLASK_DEBUG=false
 ```
-Generate a random session key with `python -c "import secrets; print(secrets.token_hex(32))"`.
 
-### 2. Run the Store
-Start the Flask server:
-```bash
+Generate a session secret with:
+
+```powershell
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Keep real credentials in `.env` or the hosting provider's secret manager. **Never commit `.env` or put real connection strings in Python, notebooks, screenshots, or documentation.** The repository ignores `.env`; `.env.example` contains placeholders only.
+
+### 3. Initialize and seed the database
+
+Create the database tables using [`schema.sql`](schema.sql), then load demo records with [`seed_data.py`](seed_data.py). Both use the `DATABASE_URL` from `.env`. Run these only against a development database you control.
+
+```powershell
+psql $env:DATABASE_URL -f schema.sql
+python seed_data.py
+```
+
+### 4. Start the web application
+
+```powershell
 python app.py
 ```
-Open your browser and navigate to:
-```
-http://127.0.0.1:5000
+
+Open <http://127.0.0.1:5000>.
+
+### 5. Run the analytics workflow
+
+The EDA scripts use paths relative to the repository, so run from the project root. The database export steps are optional if you want to use the included CSV snapshots.
+
+```powershell
+# Optional: refresh the raw product/traffic snapshot from Neon
+python eda/export_product_views.py
+
+# Inspect, validate, and segment the CSV snapshot
+python eda/01_data_understanding.py
+python eda/02_data_quality.py
+python eda/03_univariate_analysis.py
+python eda/05_actionable_insights.py
+python eda/find_at_risk.py
+
+# Optional: export the at-risk product review sample from Neon
+python eda/export_reviews_analysis.py
+python eda/low_rated_reviews.py
+
+# Generate all PNG charts
+python eda/visualisations/boxplots.py
+python eda/visualisations/distributions.py
+python eda/visualisations/ratings_analysis.py
+python eda/visualisations/views_vs_price.py
+python eda/segmentation.py
 ```
 
-### 3. Run Automated Tests
-Execute the comprehensive 13-point test suite:
-```bash
+Outputs:
+
+- Raw product snapshot: `data/raw/product_views_analysis.csv`
+- Segmentation and review extracts: `data/processed/`
+- Generated chart images: `reports/visualisations/`
+
+### 6. Tests
+
+```powershell
 python test_suite.py
 ```
 
-## Deploy to Vercel
+The integration tests require the database to be configured and seeded.
 
-1. Import `poruri-santhosh/AMAZON-CLONE` from the Vercel dashboard. Vercel detects the Flask app in `app.py`.
-2. Add `DATABASE_URL` and `FLASK_SECRET_KEY` under the project's Environment Variables. Generate a unique value for `FLASK_SECRET_KEY`; do not reuse the local development value.
-3. Make sure the Neon database has been initialized with `schema.sql` and populated as needed.
-4. Deploy the project. Vercel requires `FLASK_SECRET_KEY` at startup and will report an error if it is missing.
+## Deployment preparation
+
+The app is structured for a Flask deployment and has previously been hosted on Vercel. Before deploying a fresh environment:
+
+1. Create/configure the PostgreSQL database and apply `schema.sql`.
+2. Configure `DATABASE_URL` and a strong, unique `FLASK_SECRET_KEY` in the host's production environment settings.
+3. Confirm the required database tables and demo/catalog records exist.
+4. Deploy from the GitHub repository and verify the production build and database connectivity in the host's logs.
+
+Do not commit environment secrets. The analytics CSV snapshots and report images are committed as project/demo assets; refresh them only from a database you are authorized to query.
+
+## License and attribution
+
+This repository is an educational Amazon-inspired clone. Amazon and related marks belong to their respective owners. Add a license before reusing or distributing the code if a specific license is intended.
